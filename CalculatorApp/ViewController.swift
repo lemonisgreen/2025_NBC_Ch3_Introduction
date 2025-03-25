@@ -11,28 +11,28 @@ import SnapKit
 class ViewController: UIViewController {
     private let result = UILabel()
     
+    private var button0 = UIButton()
+    private var button1 = UIButton()
+    private var button2 = UIButton()
+    private var button3 = UIButton()
+    private var button4 = UIButton()
+    private var button5 = UIButton()
+    private var button6 = UIButton()
+    private var button7 = UIButton()
+    private var button8 = UIButton()
+    private var button9 = UIButton()
+    private var buttonAdd = UIButton()
+    private var buttonSub = UIButton()
+    private var buttonMul = UIButton()
+    private var buttonDiv = UIButton()
+    private var buttonEqual = UIButton()
+    private var buttonAC = UIButton()
+    
     private var stackView1 = UIStackView()
     private var stackView2 = UIStackView()
     private var stackView3 = UIStackView()
     private var stackView4 = UIStackView()
     private let verticalStackView = UIStackView()
-    
-    private let button0 = UIButton()
-    private let button1 = UIButton()
-    private let button2 = UIButton()
-    private let button3 = UIButton()
-    private let button4 = UIButton()
-    private let button5 = UIButton()
-    private let button6 = UIButton()
-    private let button7 = UIButton()
-    private let button8 = UIButton()
-    private let button9 = UIButton()
-    private let buttonAdd = UIButton()
-    private let buttonSub = UIButton()
-    private let buttonMul = UIButton()
-    private let buttonDiv = UIButton()
-    private let buttonEqual = UIButton()
-    private let buttonAC = UIButton()
     
     var number = "0"
     
@@ -45,52 +45,33 @@ class ViewController: UIViewController {
     private func setUpUI() {
         view.backgroundColor = .black
         
-        let numberButton = [button0, button1, button2, button3, button4, button5, button6, button7, button8, button9]
-        let activeButton = [buttonAdd, buttonSub, buttonMul, buttonDiv, buttonEqual, buttonAC]
-        
-        button0.setTitle("0", for: .normal)
-        button1.setTitle("1", for: .normal)
-        button2.setTitle("2", for: .normal)
-        button3.setTitle("3", for: .normal)
-        button4.setTitle("4", for: .normal)
-        button5.setTitle("5", for: .normal)
-        button6.setTitle("6", for: .normal)
-        button7.setTitle("7", for: .normal)
-        button8.setTitle("8", for: .normal)
-        button9.setTitle("9", for: .normal)
-        buttonAdd.setTitle("+", for: .normal)
-        buttonSub.setTitle("-", for: .normal)
-        buttonMul.setTitle("×", for: .normal)
-        buttonDiv.setTitle("/", for: .normal)
-        buttonEqual.setTitle("=", for: .normal)
-        buttonAC.setTitle("AC", for: .normal)
+        button0 = makeButton(titleValue: "0", action: #selector(num0Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        button1 = makeButton(titleValue: "1", action: #selector(num1Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        button2 = makeButton(titleValue: "2", action: #selector(num2Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        button3 = makeButton(titleValue: "3", action: #selector(num3Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        button4 = makeButton(titleValue: "4", action: #selector(num4Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        button5 = makeButton(titleValue: "5", action: #selector(num5Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        button6 = makeButton(titleValue: "6", action: #selector(num6Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        button7 = makeButton(titleValue: "7", action: #selector(num7Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        button8 = makeButton(titleValue: "8", action: #selector(num8Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        button9 = makeButton(titleValue: "9", action: #selector(num9Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        buttonAdd = makeButton(titleValue: "+", action: #selector(addTapped), backgroundColor: .orange)
+        buttonSub = makeButton(titleValue: "-", action: #selector(subTapped), backgroundColor: .orange)
+        buttonMul = makeButton(titleValue: "×", action: #selector(mulTapped), backgroundColor: .orange)
+        buttonDiv = makeButton(titleValue: "/", action: #selector(divTapped), backgroundColor: .orange)
+        buttonEqual = makeButton(titleValue: "=", action: #selector(equalTapped), backgroundColor: .orange)
+        buttonAC = makeButton(titleValue: "AC", action: #selector(acTapped), backgroundColor: .orange)
         
         stackView1 = makeHorizontalStackView([buttonAC, button0, buttonEqual, buttonDiv])
         stackView2 = makeHorizontalStackView([button1, button2, button3, buttonMul])
         stackView3 = makeHorizontalStackView([button4, button5, button6, buttonSub])
         stackView4 = makeHorizontalStackView([button7, button8, button9, buttonAdd])
         
-        numberButton.forEach {
-            $0.setTitleColor(.white, for: .normal)
-            $0.titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
-            $0.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
-            $0.layer.cornerRadius = 40
-            $0.snp.makeConstraints { $0.height.width.equalTo(80) }
-        }
-        
-        activeButton.forEach {
-            $0.setTitleColor(.white, for: .normal)
-            $0.titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
-            $0.backgroundColor = .orange
-            $0.layer.cornerRadius = 40
-            $0.snp.makeConstraints { $0.height.width.equalTo(80) }
-        }
-        
-        result.backgroundColor = .black
         result.textColor = .white
         result.font = .systemFont(ofSize: 60, weight: .bold)
-        result.text = number
         result.textAlignment = .right
+        result.backgroundColor = .black
+        result.text = number
         
         verticalStackView.axis = .vertical
         verticalStackView.spacing = 10
@@ -104,7 +85,6 @@ class ViewController: UIViewController {
             .forEach { view.addSubview($0) }
         
         result.snp.makeConstraints {
-            $0.height.equalTo(100)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.top.equalToSuperview().offset(200)
         }
@@ -116,16 +96,91 @@ class ViewController: UIViewController {
         }
     }
     
-    private func makeHorizontalStackView(_ views: [UIView]) -> UIStackView {
-        let view = UIStackView(arrangedSubviews: views)
-        view.axis = .horizontal
-        view.spacing = 10
-        view.distribution = .fillEqually
-        view.backgroundColor = .black
-        view.snp.makeConstraints { $0.height.equalTo(80) }
+    func makeHorizontalStackView(_ views: [UIView]) -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: views)
+        stackView.axis = .horizontal
+        stackView.spacing = 10
+        stackView.distribution = .fillEqually
+        stackView.backgroundColor = .black
+        stackView.snp.makeConstraints { $0.height.equalTo(80) }
         
-        return view
+        return stackView
     }
     
+    func makeButton(titleValue: String, action: Selector, backgroundColor: UIColor) -> UIButton {
+        let button = UIButton()
+        button.setTitle(titleValue, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
+        button.backgroundColor = backgroundColor
+        button.layer.cornerRadius = 40
+        button.addTarget(self, action: action, for: .touchDown)
+        button.snp.makeConstraints { $0.width.height.equalTo(80) }
+        
+        return button
+    }
+    
+    @objc func num0Tapped() {
+        
+    }
+    
+    @objc func num1Tapped() {
+        
+    }
+    
+    @objc func num2Tapped() {
+        
+    }
+    
+    @objc func num3Tapped() {
+        
+    }
+    
+    @objc func num4Tapped() {
+        
+    }
+    
+    @objc func num5Tapped() {
+        
+    }
+    
+    @objc func num6Tapped() {
+        
+    }
+    
+    @objc func num7Tapped() {
+        
+    }
+    
+    @objc func num8Tapped() {
+        
+    }
+    
+    @objc func num9Tapped() {
+        
+    }
+    
+    @objc func addTapped() {
+        
+    }
+    
+    @objc func subTapped() {
+        
+    }
+    
+    @objc func mulTapped() {
+        
+    }
+    
+    @objc func divTapped() {
+        
+    }
+    
+    @objc func equalTapped() {
+        
+    }
+    
+    @objc func acTapped() {
+        
+    }
 }
-
