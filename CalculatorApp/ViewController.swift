@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     private var stackView2 = UIStackView()
     private var stackView3 = UIStackView()
     private var stackView4 = UIStackView()
+    private let verticalStackView = UIStackView()
     
     private let button0 = UIButton()
     private let button1 = UIButton()
@@ -46,7 +47,6 @@ class ViewController: UIViewController {
         
         let numberButton = [button0, button1, button2, button3, button4, button5, button6, button7, button8, button9]
         let activeButton = [buttonAdd, buttonSub, buttonMul, buttonDiv, buttonEqual, buttonAC]
-        let stackViews = [stackView1, stackView2, stackView3, stackView4]
         
         button0.setTitle("0", for: .normal)
         button1.setTitle("1", for: .normal)
@@ -92,8 +92,15 @@ class ViewController: UIViewController {
         result.text = number
         result.textAlignment = .right
         
-        view.addSubview(result)
-        stackViews
+        verticalStackView.axis = .vertical
+        verticalStackView.spacing = 10
+        verticalStackView.distribution = .fillEqually
+        verticalStackView.backgroundColor = .black
+        
+        [stackView1, stackView2, stackView3, stackView4]
+            .reversed().forEach { verticalStackView.addArrangedSubview($0) }
+        
+        [result, verticalStackView]
             .forEach { view.addSubview($0) }
         
         result.snp.makeConstraints {
@@ -102,27 +109,9 @@ class ViewController: UIViewController {
             $0.top.equalToSuperview().offset(200)
         }
         
-        stackView4.snp.makeConstraints {
+        verticalStackView.snp.makeConstraints {
             $0.width.equalTo(350)
             $0.top.equalTo(result.snp.bottom).offset(60)
-            $0.centerX.equalToSuperview()
-        }
-        
-        stackView3.snp.makeConstraints {
-            $0.width.equalTo(stackView4.snp.width)
-            $0.top.equalTo(stackView4.snp.bottom).offset(10)
-            $0.centerX.equalToSuperview()
-        }
-        
-        stackView2.snp.makeConstraints {
-            $0.width.equalTo(stackView4.snp.width)
-            $0.top.equalTo(stackView3.snp.bottom).offset(10)
-            $0.centerX.equalToSuperview()
-        }
-        
-        stackView1.snp.makeConstraints {
-            $0.width.equalTo(stackView4.snp.width)
-            $0.top.equalTo(stackView2.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
         }
     }
