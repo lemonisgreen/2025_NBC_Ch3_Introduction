@@ -68,8 +68,9 @@ class ViewController: UIViewController {
         numberButton.forEach {
             $0.setTitleColor(.white, for: .normal)
             $0.titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
-            $0.backgroundColor = .gray
+            $0.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
             $0.layer.cornerRadius = 40
+            $0.snp.makeConstraints { $0.height.width.equalTo(80) }
         }
         
         activeButton.forEach {
@@ -77,8 +78,10 @@ class ViewController: UIViewController {
             $0.titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
             $0.backgroundColor = .orange
             $0.layer.cornerRadius = 40
+            $0.snp.makeConstraints { $0.height.width.equalTo(80) }
         }
         
+        result.backgroundColor = .black
         result.textColor = .white
         result.font = .systemFont(ofSize: 60, weight: .bold)
         result.text = number
@@ -106,6 +109,7 @@ class ViewController: UIViewController {
             .forEach { view.addSubview($0) }
         
         result.snp.makeConstraints {
+            $0.height.equalTo(100)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.top.equalToSuperview().offset(200)
         }
