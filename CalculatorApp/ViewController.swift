@@ -11,10 +11,10 @@ import SnapKit
 class ViewController: UIViewController {
     private let result = UILabel()
     
-    private let stackView1 = UIStackView()
-    private let stackView2 = UIStackView()
-    private let stackView3 = UIStackView()
-    private let stackView4 = UIStackView()
+    private var stackView1 = UIStackView()
+    private var stackView2 = UIStackView()
+    private var stackView3 = UIStackView()
+    private var stackView4 = UIStackView()
     
     private let button0 = UIButton()
     private let button1 = UIButton()
@@ -65,6 +65,11 @@ class ViewController: UIViewController {
         buttonEqual.setTitle("=", for: .normal)
         buttonAC.setTitle("AC", for: .normal)
         
+        stackView1 = makeHorizontalStackView([buttonAC, button0, buttonEqual, buttonDiv])
+        stackView2 = makeHorizontalStackView([button1, button2, button3, buttonMul])
+        stackView3 = makeHorizontalStackView([button4, button5, button6, buttonSub])
+        stackView4 = makeHorizontalStackView([button7, button8, button9, buttonAdd])
+        
         numberButton.forEach {
             $0.setTitleColor(.white, for: .normal)
             $0.titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
@@ -86,23 +91,6 @@ class ViewController: UIViewController {
         result.font = .systemFont(ofSize: 60, weight: .bold)
         result.text = number
         result.textAlignment = .right
-        
-        [buttonAC, button0, buttonEqual, buttonDiv]
-            .forEach { stackView1.addArrangedSubview($0) }
-        [button1, button2, button3, buttonMul]
-            .forEach { stackView2.addArrangedSubview($0) }
-        [button4, button5, button6, buttonSub]
-            .forEach { stackView3.addArrangedSubview($0) }
-        [button7, button8, button9, buttonAdd]
-            .forEach { stackView4.addArrangedSubview($0) }
-        
-        stackViews.forEach {
-            $0.axis = .horizontal
-            $0.spacing = 10
-            $0.distribution = .fillEqually
-            $0.backgroundColor = .black
-            $0.snp.makeConstraints { $0.height.equalTo(80) }
-        }
         
         view.addSubview(result)
         stackViews
@@ -137,6 +125,17 @@ class ViewController: UIViewController {
             $0.top.equalTo(stackView2.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
         }
+    }
+    
+    private func makeHorizontalStackView(_ views: [UIView]) -> UIStackView {
+        let view = UIStackView(arrangedSubviews: views)
+        view.axis = .horizontal
+        view.spacing = 10
+        view.distribution = .fillEqually
+        view.backgroundColor = .black
+        view.snp.makeConstraints { $0.height.equalTo(80) }
+        
+        return view
     }
     
 }
