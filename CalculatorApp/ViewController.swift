@@ -130,6 +130,15 @@ class ViewController: UIViewController {
         }
     }
     
+    func lastElementIsOperator(_ input: String) {
+        if textValue.last != "+" &&
+        textValue.last != "-" &&
+        textValue.last != "×" &&
+        textValue.last != "/" {
+            textValue += input
+        }
+    }
+    
     @objc func num0Tapped() {
         if textValue != "0" {
             textValue += "0"
@@ -219,22 +228,22 @@ class ViewController: UIViewController {
     }
     
     @objc func addTapped() {
-        textValue += "+"
+        lastElementIsOperator("+")
         numLabel.text = textValue
     }
     
     @objc func subTapped() {
-        textValue += "-"
+        lastElementIsOperator("-")
         numLabel.text = textValue
     }
     
     @objc func mulTapped() {
-        textValue += "×"
+        lastElementIsOperator("×")
         numLabel.text = textValue
     }
     
     @objc func divTapped() {
-        textValue += "/"
+        lastElementIsOperator("/")
         numLabel.text = textValue
     }
     
