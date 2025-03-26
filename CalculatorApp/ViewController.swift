@@ -34,6 +34,7 @@ class ViewController: UIViewController {
     let verticalStackView = UIStackView()
     
     var textValue = "0"
+    var numberValue = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,17 +59,38 @@ class ViewController: UIViewController {
         }
     }
     
-    func lastElementIsOperator(_ input: String) {
+    func addOperator(_ input: String) {
         if textValue.last != "+" &&
         textValue.last != "-" &&
         textValue.last != "×" &&
         textValue.last != "/" {
             textValue += input
         }
+        
+        numLabel.text = textValue
     }
     
-    func zeroCheck() {
+    func addZero() {
+        guard textValue != "0" else { return }
         
+        if textValue.last != "+" &&
+        textValue.last != "-" &&
+        textValue.last != "×" &&
+        textValue.last != "/" {
+            textValue += "0"
+        }
+        
+        numLabel.text = textValue
+    }
+    
+    func addNumber(_ number: String) {
+        if textValue != "0" {
+            textValue += number
+        } else {
+            textValue = number
+        }
+        
+        numLabel.text = textValue
     }
     
     enum CalculatorError: Error {
@@ -83,111 +105,59 @@ class ViewController: UIViewController {
     // ------------------- 버튼 액션 ------------------------
     
     @objc func num0Tapped() {
-        if textValue != "0" {
-            textValue += "0"
-        }
-        numLabel.text = textValue
+        addZero()
     }
     
     @objc func num1Tapped() {
-        if textValue != "0" {
-            textValue += "1"
-        } else {
-            textValue = "1"
-        }
-        numLabel.text = textValue
+        addNumber("1")
     }
     
     @objc func num2Tapped() {
-        if textValue != "0" {
-            textValue += "2"
-        } else {
-            textValue = "2"
-        }
-        numLabel.text = textValue
+        addNumber("2")
     }
     
     @objc func num3Tapped() {
-        if textValue != "0" {
-            textValue += "3"
-        } else {
-            textValue = "3"
-        }
-        numLabel.text = textValue
+        addNumber("3")
     }
     
     @objc func num4Tapped() {
-        if textValue != "0" {
-            textValue += "4"
-        } else {
-            textValue = "4"
-        }
-        numLabel.text = textValue
+        addNumber("4")
     }
     
     @objc func num5Tapped() {
-        if textValue != "0" {
-            textValue += "5"
-        } else {
-            textValue = "5"
-        }
-        numLabel.text = textValue
+        addNumber("5")
     }
     
     @objc func num6Tapped() {
-        if textValue != "0" {
-            textValue += "6"
-        } else {
-            textValue = "6"
-        }
-        numLabel.text = textValue
+        addNumber("6")
     }
     
     @objc func num7Tapped() {
-        if textValue != "0" {
-            textValue += "7"
-        } else {
-            textValue = "7"
-        }
-        numLabel.text = textValue
+        addNumber("7")
     }
     
     @objc func num8Tapped() {
-        if textValue != "0" {
-            textValue += "8"
-        } else {
-            textValue = "8"
-        }
-        numLabel.text = textValue
+        addNumber("8")
     }
     
     @objc func num9Tapped() {
-        if textValue != "0" {
-            textValue += "9"
-        } else {
-            textValue = "9"
-        }
-        numLabel.text = textValue
+        addNumber("9")
     }
     
     @objc func addTapped() {
-        lastElementIsOperator("+")
-        numLabel.text = textValue
+        addOperator("+")
     }
     
     @objc func subTapped() {
-        lastElementIsOperator("-")
-        numLabel.text = textValue
+        addOperator("-")
     }
     
     @objc func mulTapped() {
-        lastElementIsOperator("×")
-        numLabel.text = textValue
+        addOperator("×")
     }
     
     @objc func divTapped() {
-        lastElementIsOperator("/")
-        numLabel.text = textValue
+        addOperator("/")
     }
     
     @objc func acTapped() {
@@ -208,6 +178,7 @@ class ViewController: UIViewController {
             textValue = "0"
             numLabel.text = "Error"
         } catch {
+            textValue = "0"
             numLabel.text = "Unknown Error"
         }
     }
