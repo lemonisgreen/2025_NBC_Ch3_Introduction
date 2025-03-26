@@ -41,66 +41,6 @@ class ViewController: UIViewController {
         setUpUI()
     }
     
-    func calculate(expression: String) throws -> Int {
-        guard textValue.last != "+" &&
-                textValue.last != "-" &&
-                textValue.last != "×" &&
-                textValue.last != "/"
-        else { throw CalculatorError.lastIsOperator }
-        
-        let replaced = expression.replacingOccurrences(of: "×", with: "*")
-        let expression = NSExpression(format: replaced)
-        
-        if let result = expression.expressionValue(with: nil, context: nil) as? Int {
-            return result
-        } else {
-            throw CalculatorError.failCalculation
-        }
-    }
-    
-    func addOperator(_ input: String) {
-        if textValue.last != "+" &&
-        textValue.last != "-" &&
-        textValue.last != "×" &&
-        textValue.last != "/" {
-            textValue += input
-        }
-        
-        numLabel.text = textValue
-    }
-    
-    func addZero() {
-        guard textValue != "0" else { return }
-        
-        if textValue.last != "+" &&
-        textValue.last != "-" &&
-        textValue.last != "×" &&
-        textValue.last != "/" {
-            textValue += "0"
-        }
-        
-        numLabel.text = textValue
-    }
-    
-    func addNumber(_ number: String) {
-        if textValue != "0" {
-            textValue += number
-        } else {
-            textValue = number
-        }
-        
-        numLabel.text = textValue
-    }
-    
-    enum CalculatorError: Error {
-        case lastIsOperator
-        case failCalculation
-    }
-    
-    
-    
-    
-    
     // ------------------- 버튼 액션 ------------------------
     
     @objc func num0Tapped() {
@@ -165,15 +105,15 @@ class ViewController: UIViewController {
     }
     
     @objc func equalTapped() {
-        do {
+        do {            // "="버튼을 눌렀을 때 예외처리
             
             textValue = try String(calculate(expression: textValue))
             numLabel.text = textValue
             
-        } catch CalculatorError.lastIsOperator {
+        } catch CalculatorError.lastIsOperator {    // 식의 마지막 문자가 연산자일 때
             textValue = "0"
             numLabel.text = "Error"
-        } catch CalculatorError.failCalculation {
+        } catch CalculatorError.failCalculation {   // 계산에 실패한 경우
             textValue = "0"
             numLabel.text = "Error"
         } catch {

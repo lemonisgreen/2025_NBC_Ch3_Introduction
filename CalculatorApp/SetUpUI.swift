@@ -9,9 +9,18 @@ import SnapKit
 
 extension ViewController {
     
+    // 뷰 로드 시 실행될 UI세팅
     func setUpUI() {
         view.backgroundColor = .black
         
+        // 라벨 세팅
+        numLabel.textColor = .white
+        numLabel.font = .systemFont(ofSize: 60, weight: .bold)
+        numLabel.textAlignment = .right
+        numLabel.backgroundColor = .black
+        numLabel.text = textValue
+        
+        // 버튼 세팅
         button0 = makeButton(titleValue: "0", action: #selector(num0Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
         button1 = makeButton(titleValue: "1", action: #selector(num1Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
         button2 = makeButton(titleValue: "2", action: #selector(num2Tapped), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
@@ -29,33 +38,33 @@ extension ViewController {
         buttonAC = makeButton(titleValue: "AC", action: #selector(acTapped), backgroundColor: .orange)
         buttonEqual = makeButton(titleValue: "=", action: #selector(equalTapped), backgroundColor: .orange)
         
+        // 호리즌탈 스택뷰 세팅
         stackView1 = makeHorizontalStackView([button7, button8, button9, buttonAdd])
         stackView2 = makeHorizontalStackView([button4, button5, button6, buttonSub])
         stackView3 = makeHorizontalStackView([button1, button2, button3, buttonMul])
         stackView4 = makeHorizontalStackView([buttonAC, button0, buttonEqual, buttonDiv])
         
-        numLabel.textColor = .white
-        numLabel.font = .systemFont(ofSize: 60, weight: .bold)
-        numLabel.textAlignment = .right
-        numLabel.backgroundColor = .black
-        numLabel.text = textValue
-        
+        // 버티컬 스택뷰 세팅
         verticalStackView.axis = .vertical
         verticalStackView.spacing = 10
         verticalStackView.distribution = .fillEqually
         verticalStackView.backgroundColor = .black
         
+        // 버티컬 스택뷰에 호리즌탈 스택뷰 추가
         [stackView1, stackView2, stackView3, stackView4]
             .forEach { verticalStackView.addArrangedSubview($0) }
         
+        // 라벨, 스택뷰를 뷰에 로딩
         [numLabel, verticalStackView]
             .forEach { view.addSubview($0) }
         
+        // 라벨 오토레이아웃
         numLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.top.equalToSuperview().offset(200)
         }
         
+        // 스택뷰 오토레아이웃
         verticalStackView.snp.makeConstraints {
             $0.width.equalTo(350)
             $0.top.equalTo(numLabel.snp.bottom).offset(60)
@@ -63,6 +72,7 @@ extension ViewController {
         }
     }
     
+    // 호리즌탈 스택뷰를 세팅하는 메서드
     func makeHorizontalStackView(_ views: [UIView]) -> UIStackView {
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = .horizontal
@@ -74,6 +84,7 @@ extension ViewController {
         return stackView
     }
     
+    // 버튼을 세팅하는 메서드
     func makeButton(titleValue: String, action: Selector, backgroundColor: UIColor) -> UIButton {
         let button = UIButton()
         button.setTitle(titleValue, for: .normal)
