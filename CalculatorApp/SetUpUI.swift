@@ -92,7 +92,7 @@ extension ViewController {
         button.titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
         button.backgroundColor = backgroundColor
         button.layer.cornerRadius = 40
-        button.addTarget(self, action: action, for: .touchDown)
+        button.addTarget(self, action: action, for: .touchUpInside)
         button.snp.makeConstraints { $0.width.height.equalTo(80) }
         
         return button
