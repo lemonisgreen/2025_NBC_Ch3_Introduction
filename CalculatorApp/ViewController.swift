@@ -59,8 +59,8 @@ class ViewController: UIViewController {
         buttonSub = makeButton(titleValue: "-", action: #selector(subTapped), backgroundColor: .orange)
         buttonMul = makeButton(titleValue: "×", action: #selector(mulTapped), backgroundColor: .orange)
         buttonDiv = makeButton(titleValue: "/", action: #selector(divTapped), backgroundColor: .orange)
-        buttonEqual = makeButton(titleValue: "=", action: #selector(equalTapped), backgroundColor: .orange)
         buttonAC = makeButton(titleValue: "AC", action: #selector(acTapped), backgroundColor: .orange)
+        buttonEqual = makeButton(titleValue: "=", action: try #selector(equalTapped), backgroundColor: .orange)
         
         stackView1 = makeHorizontalStackView([button7, button8, button9, buttonAdd])
         stackView2 = makeHorizontalStackView([button4, button5, button6, buttonSub])
@@ -120,13 +120,21 @@ class ViewController: UIViewController {
         return button
     }
     
-    func calculate(expression: String) -> Int? {
+    func calculate(expression: String) throws -> Int {
+        guard textValue.last != "+" &&
+                textValue.last != "-" &&
+                textValue.last != "×" &&
+                textValue.last != "/"
+        else {
+            throw CalculatorError.lastIsOperator
+        }
+        
         let replaced = expression.replacingOccurrences(of: "×", with: "*")
         let expression = NSExpression(format: replaced)
         if let result = expression.expressionValue(with: nil, context: nil) as? Int {
             return result
         } else {
-            return nil
+            throw CalculatorError.failCalculation
         }
     }
     
@@ -138,6 +146,17 @@ class ViewController: UIViewController {
             textValue += input
         }
     }
+    
+    enum CalculatorError: Error {
+        case lastIsOperator
+        case failCalculation
+    }
+    
+    
+    
+    
+    
+    // ------------------- 버튼 액션 ------------------------
     
     @objc func num0Tapped() {
         if textValue != "0" {
@@ -248,13 +267,20 @@ class ViewController: UIViewController {
     }
     
     @objc func equalTapped() {
-        if let value = calculate(expression: textValue) {
-            textValue = String(value)
-        } else {
-            textValue = "Error"
+        do {
+            
+            textValue = try String(calculate(expression: textValue))
+            numLabel.text = textValue
+            
+        } catch CalculatorError.lastIsOperator {
+            textValue = "0"
+            numLabel.text = "Error"
+        } catch CalculatorError.failCalculation {
+            textValue = "0"
+            numLabel.text = "Error"
+        } catch {
+            numLabel.text = "Unknown Error"
         }
-        
-        numLabel.text = textValue
     }
     
     @objc func acTapped() {
