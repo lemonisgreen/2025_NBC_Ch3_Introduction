@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class ViewController: UIViewController {
-    private let result = UILabel()
+    private let numLabel = UILabel()
     
     private var button0 = UIButton()
     private var button1 = UIButton()
@@ -34,7 +34,7 @@ class ViewController: UIViewController {
     private var stackView4 = UIStackView()
     private let verticalStackView = UIStackView()
     
-    var number = "0"
+    var textValue = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,11 +67,11 @@ class ViewController: UIViewController {
         stackView3 = makeHorizontalStackView([button1, button2, button3, buttonMul])
         stackView4 = makeHorizontalStackView([buttonAC, button0, buttonEqual, buttonDiv])
         
-        result.textColor = .white
-        result.font = .systemFont(ofSize: 60, weight: .bold)
-        result.textAlignment = .right
-        result.backgroundColor = .black
-        result.text = number
+        numLabel.textColor = .white
+        numLabel.font = .systemFont(ofSize: 60, weight: .bold)
+        numLabel.textAlignment = .right
+        numLabel.backgroundColor = .black
+        numLabel.text = textValue
         
         verticalStackView.axis = .vertical
         verticalStackView.spacing = 10
@@ -81,17 +81,17 @@ class ViewController: UIViewController {
         [stackView1, stackView2, stackView3, stackView4]
             .forEach { verticalStackView.addArrangedSubview($0) }
         
-        [result, verticalStackView]
+        [numLabel, verticalStackView]
             .forEach { view.addSubview($0) }
         
-        result.snp.makeConstraints {
+        numLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.top.equalToSuperview().offset(200)
         }
         
         verticalStackView.snp.makeConstraints {
             $0.width.equalTo(350)
-            $0.top.equalTo(result.snp.bottom).offset(60)
+            $0.top.equalTo(numLabel.snp.bottom).offset(60)
             $0.centerX.equalToSuperview()
         }
     }
@@ -120,82 +120,136 @@ class ViewController: UIViewController {
         return button
     }
     
+    func calculate(expression: String) -> Int? {
+        let replaced = expression.replacingOccurrences(of: "×", with: "*")
+        let expression = NSExpression(format: replaced)
+        if let result = expression.expressionValue(with: nil, context: nil) as? Int {
+            return result
+        } else {
+            return nil
+        }
+    }
+    
     @objc func num0Tapped() {
-        number += "0"
-        result.text = number
+        if textValue != "0" {
+            textValue += "0"
+        }
+        numLabel.text = textValue
     }
     
     @objc func num1Tapped() {
-        number += "1"
-        result.text = number
+        if textValue != "0" {
+            textValue += "1"
+        } else {
+            textValue = "1"
+        }
+        numLabel.text = textValue
     }
     
     @objc func num2Tapped() {
-        number += "2"
-        result.text = number
+        if textValue != "0" {
+            textValue += "2"
+        } else {
+            textValue = "2"
+        }
+        numLabel.text = textValue
     }
     
     @objc func num3Tapped() {
-        number += "3"
-        result.text = number
+        if textValue != "0" {
+            textValue += "3"
+        } else {
+            textValue = "3"
+        }
+        numLabel.text = textValue
     }
     
     @objc func num4Tapped() {
-        number += "4"
-        result.text = number
+        if textValue != "0" {
+            textValue += "4"
+        } else {
+            textValue = "4"
+        }
+        numLabel.text = textValue
     }
     
     @objc func num5Tapped() {
-        number += "5"
-        result.text = number
+        if textValue != "0" {
+            textValue += "5"
+        } else {
+            textValue = "5"
+        }
+        numLabel.text = textValue
     }
     
     @objc func num6Tapped() {
-        number += "6"
-        result.text = number
+        if textValue != "0" {
+            textValue += "6"
+        } else {
+            textValue = "6"
+        }
+        numLabel.text = textValue
     }
     
     @objc func num7Tapped() {
-        number += "7"
-        result.text = number
+        if textValue != "0" {
+            textValue += "7"
+        } else {
+            textValue = "7"
+        }
+        numLabel.text = textValue
     }
     
     @objc func num8Tapped() {
-        number += "8"
-        result.text = number
+        if textValue != "0" {
+            textValue += "8"
+        } else {
+            textValue = "8"
+        }
+        numLabel.text = textValue
     }
     
     @objc func num9Tapped() {
-        number += "9"
-        result.text = number
+        if textValue != "0" {
+            textValue += "9"
+        } else {
+            textValue = "9"
+        }
+        numLabel.text = textValue
     }
     
     @objc func addTapped() {
-        number += "+"
-        result.text = number
+        textValue += "+"
+        numLabel.text = textValue
     }
     
     @objc func subTapped() {
-        number += "-"
-        result.text = number
+        textValue += "-"
+        numLabel.text = textValue
     }
     
     @objc func mulTapped() {
-        number += "×"
-        result.text = number
+        textValue += "×"
+        numLabel.text = textValue
     }
     
     @objc func divTapped() {
-        number += "/"
-        result.text = number
+        textValue += "/"
+        numLabel.text = textValue
     }
     
     @objc func equalTapped() {
+        if let value = calculate(expression: textValue) {
+            textValue = String(value)
+        } else {
+            textValue = "Error"
+        }
         
+        numLabel.text = textValue
     }
     
     @objc func acTapped() {
-        number = "0"
-        result.text = number
+        textValue = "0"
+        numLabel.text = textValue
     }
 }
