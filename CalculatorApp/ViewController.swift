@@ -62,10 +62,10 @@ class ViewController: UIViewController {
         buttonEqual = makeButton(titleValue: "=", action: #selector(equalTapped), backgroundColor: .orange)
         buttonAC = makeButton(titleValue: "AC", action: #selector(acTapped), backgroundColor: .orange)
         
-        stackView1 = makeHorizontalStackView([buttonAC, button0, buttonEqual, buttonDiv])
-        stackView2 = makeHorizontalStackView([button1, button2, button3, buttonMul])
-        stackView3 = makeHorizontalStackView([button4, button5, button6, buttonSub])
-        stackView4 = makeHorizontalStackView([button7, button8, button9, buttonAdd])
+        stackView1 = makeHorizontalStackView([button7, button8, button9, buttonAdd])
+        stackView2 = makeHorizontalStackView([button4, button5, button6, buttonSub])
+        stackView3 = makeHorizontalStackView([button1, button2, button3, buttonMul])
+        stackView4 = makeHorizontalStackView([buttonAC, button0, buttonEqual, buttonDiv])
         
         result.textColor = .white
         result.font = .systemFont(ofSize: 60, weight: .bold)
@@ -79,7 +79,7 @@ class ViewController: UIViewController {
         verticalStackView.backgroundColor = .black
         
         [stackView1, stackView2, stackView3, stackView4]
-            .reversed().forEach { verticalStackView.addArrangedSubview($0) }
+            .forEach { verticalStackView.addArrangedSubview($0) }
         
         [result, verticalStackView]
             .forEach { view.addSubview($0) }
@@ -121,59 +121,73 @@ class ViewController: UIViewController {
     }
     
     @objc func num0Tapped() {
-        
+        number += "0"
+        result.text = number
     }
     
     @objc func num1Tapped() {
-        
+        number += "1"
+        result.text = number
     }
     
     @objc func num2Tapped() {
-        
+        number += "2"
+        result.text = number
     }
     
     @objc func num3Tapped() {
-        
+        number += "3"
+        result.text = number
     }
     
     @objc func num4Tapped() {
-        
+        number += "4"
+        result.text = number
     }
     
     @objc func num5Tapped() {
-        
+        number += "5"
+        result.text = number
     }
     
     @objc func num6Tapped() {
-        
+        number += "6"
+        result.text = number
     }
     
     @objc func num7Tapped() {
-        
+        number += "7"
+        result.text = number
     }
     
     @objc func num8Tapped() {
-        
+        number += "8"
+        result.text = number
     }
     
     @objc func num9Tapped() {
-        
+        number += "9"
+        result.text = number
     }
     
     @objc func addTapped() {
-        
+        number += "+"
+        result.text = number
     }
     
     @objc func subTapped() {
-        
+        number += "-"
+        result.text = number
     }
     
     @objc func mulTapped() {
-        
+        number += "×"
+        result.text = number
     }
     
     @objc func divTapped() {
-        
+        number += "/"
+        result.text = number
     }
     
     @objc func equalTapped() {
@@ -181,6 +195,7 @@ class ViewController: UIViewController {
     }
     
     @objc func acTapped() {
-        
+        number = "0"
+        result.text = number
     }
 }
