@@ -34,7 +34,6 @@ class ViewController: UIViewController {
     let verticalStackView = UIStackView()
     
     var textValue = "0"
-    var numberValue = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
