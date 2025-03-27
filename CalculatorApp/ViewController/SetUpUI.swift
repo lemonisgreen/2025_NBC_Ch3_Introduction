@@ -18,6 +18,8 @@ extension ViewController {
         numLabel.font = .systemFont(ofSize: 60, weight: .bold)
         numLabel.textAlignment = .right
         numLabel.backgroundColor = .black
+        numLabel.lineBreakMode = .byTruncatingHead
+        numLabel.adjustsFontSizeToFitWidth = true
         numLabel.text = textValue
         
         // 버튼 세팅
