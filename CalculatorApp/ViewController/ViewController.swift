@@ -33,6 +33,12 @@ class ViewController: UIViewController {
     var stackView4 = UIStackView()
     let verticalStackView = UIStackView()
     
+    let titleNum = Array(0...9).map { String($0) }
+    let titleOper = ["+", "-", "*", "/", "AC", "="]
+    
+    let actionNum = [#selector(num0Tapped), #selector(num1Tapped), #selector(num2Tapped), #selector(num3Tapped), #selector(num4Tapped), #selector(num5Tapped), #selector(num6Tapped), #selector(num7Tapped), #selector(num8Tapped), #selector(num9Tapped)]
+    let actionOper = [#selector(addTapped), #selector(subTapped), #selector(mulTapped), #selector(divTapped), #selector(acTapped), #selector(equalTapped)]
+    
     var textValue = "0"
     
     override func viewDidLoad() {
