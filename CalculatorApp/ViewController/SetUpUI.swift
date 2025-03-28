@@ -108,16 +108,36 @@ extension ViewController {
             button.setTitleColor(.white, for: .normal)
             button.titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
             button.layer.cornerRadius = 40
+            button.layer.masksToBounds = true
             button.addTarget(self, action: action, for: .touchUpInside)
             button.snp.makeConstraints { $0.width.height.equalTo(80) }
             
             switch type {
             case .num:
-                button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+                button.setBackgroundColor(UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0), for: .normal)
             case .oper:
-                button.backgroundColor = .orange
+                button.setBackgroundColor(.orange, for: .normal)
             }
         }
     }
     
+}
+
+/*
+ button.backgroundColor 로 백그라운드 컬러 생성 시
+ 버튼의 클릭 이펙트가 출력되지 않는 현상 개션을 위해
+ 버튼의 상태별 백그라운드 컬러를 지정할 수 있는 메서드를 생성
+ */
+extension UIButton {
+    func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+        UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0))
+        
+        let backgroundImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        setBackgroundImage(backgroundImage, for: state)
+    }
 }
