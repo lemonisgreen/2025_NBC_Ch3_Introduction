@@ -43,7 +43,7 @@ extension ViewController {
                    button: [buttonAdd, buttonSub,
                             buttonMul, buttonDiv,
                             buttonAC, buttonEqual],
-                   title: ["+", "-", "*", "/", "AC", "="],
+                   title: ["+", "-", "×", "/", "AC", "="],
                    action: [#selector(addTapped), #selector(subTapped),
                             #selector(mulTapped), #selector(divTapped),
                             #selector(acTapped), #selector(equalTapped)])
