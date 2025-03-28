@@ -22,12 +22,16 @@ extension ViewController {
         numLabel.adjustsFontSizeToFitWidth = true
         numLabel.text = textValue
         
-        // 버튼 세팅
-        let buttonNum = [button0, button1, button2, button3, button4, button5, button6, button7, button8, button9]
-        let buttonOper = [buttonAdd, buttonSub, buttonMul, buttonDiv, buttonAC, buttonEqual]
-        
-        makeButton(type: .num, button: buttonNum, title: titleNum, action: actionNum)
-        makeButton(type: .oper, button: buttonOper, title: titleOper, action: actionOper)
+        // 숫자 버튼 세팅
+        makeButton(type: .num,
+                   button: [button0, button1, button2, button3, button4, button5, button6, button7, button8, button9],
+                   title: Array(0...9).map { String($0) },
+                   action: [#selector(num0Tapped), #selector(num1Tapped), #selector(num2Tapped), #selector(num3Tapped), #selector(num4Tapped), #selector(num5Tapped), #selector(num6Tapped), #selector(num7Tapped), #selector(num8Tapped), #selector(num9Tapped)])
+        // 연산자 버튼 세팅
+        makeButton(type: .oper,
+                   button: [buttonAdd, buttonSub, buttonMul, buttonDiv, buttonAC, buttonEqual],
+                   title: ["+", "-", "*", "/", "AC", "="],
+                   action: [#selector(addTapped), #selector(subTapped), #selector(mulTapped), #selector(divTapped), #selector(acTapped), #selector(equalTapped)])
         
         // 호리즌탈 스택뷰 세팅
         stackView1 = makeHorizontalStackView([button7, button8, button9, buttonAdd])
