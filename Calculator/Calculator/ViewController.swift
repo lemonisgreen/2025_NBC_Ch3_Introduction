@@ -23,17 +23,18 @@ class ViewController: UIViewController {
         view.backgroundColor = .black
         label.text = "12345"
         label.textColor = .white
+        label.font = .systemFont(ofSize: 60, weight: .bold)
+        label.textAlignment = .right
         
         view.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            label.widthAnchor.constraint(equalToConstant: 300),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
+            label.heightAnchor.constraint(equalToConstant: 100)
         ])
         
     }
-  
-    
-    
-
 }
 

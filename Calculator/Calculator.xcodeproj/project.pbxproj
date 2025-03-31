@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		F158A1182D9689A800C9F009 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F158A1172D9689A800C9F009 /* SnapKit */; };
-		F158A11A2D9689A800C9F009 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = F158A1192D9689A800C9F009 /* SnapKit-Dynamic */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +41,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F158A1182D9689A800C9F009 /* SnapKit in Frameworks */,
-				F158A11A2D9689A800C9F009 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,7 +84,6 @@
 			name = Calculator;
 			packageProductDependencies = (
 				F158A1172D9689A800C9F009 /* SnapKit */,
-				F158A1192D9689A800C9F009 /* SnapKit-Dynamic */,
 			);
 			productName = Calculator;
 			productReference = F158A0FE2D967E6800C9F009 /* Calculator.app */;
@@ -362,11 +359,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F158A1162D9689A800C9F009 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		F158A1192D9689A800C9F009 /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F158A1162D9689A800C9F009 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
