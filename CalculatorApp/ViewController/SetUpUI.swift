@@ -9,6 +9,12 @@ import SnapKit
 
 extension ViewController {
     
+    // 버튼 타입을 나눠둔 열거형
+    enum ButtonType {
+        case num
+        case oper
+    }
+    
     // 뷰 로드 시 실행될 UI세팅
     func setUpUI() {
         view.backgroundColor = .black
@@ -27,26 +33,13 @@ extension ViewController {
                    button: [button0, button1, button2,
                             button3, button4, button5,
                             button6, button7, button8, button9],
-                   title: Array(0...9).map { String($0) },
-                   action: [#selector(num0Tapped),
-                            #selector(num1Tapped),
-                            #selector(num2Tapped),
-                            #selector(num3Tapped),
-                            #selector(num4Tapped),
-                            #selector(num5Tapped),
-                            #selector(num6Tapped),
-                            #selector(num7Tapped),
-                            #selector(num8Tapped),
-                            #selector(num9Tapped)])
+                   title: Array(0...9).map { String($0) })
         // 연산자 버튼 세팅
         makeButton(type: .oper,
                    button: [buttonAdd, buttonSub,
                             buttonMul, buttonDiv,
                             buttonAC, buttonEqual],
-                   title: ["+", "-", "×", "/", "AC", "="],
-                   action: [#selector(addTapped), #selector(subTapped),
-                            #selector(mulTapped), #selector(divTapped),
-                            #selector(acTapped), #selector(equalTapped)])
+                   title: ["+", "-", "×", "/", "AC", "="])
         
         // 호리즌탈 스택뷰 세팅
         stackView1 = makeHorizontalStackView([button7, button8, button9, buttonAdd])
@@ -94,22 +87,16 @@ extension ViewController {
         return stackView
     }
     
-    // 버튼 타입을 나눠둔 열거형
-    enum ButtonType {
-        case num
-        case oper
-    }
-    
     // 버튼을 세팅하는 메서드
-    func makeButton(type: ButtonType, button: [UIButton], title: [String], action: [Selector]) {
+    func makeButton(type: ButtonType, button: [UIButton], title: [String]) {
         
-        for ((button, title), action) in zip(zip(button, title), action) {
+        for (button, title) in zip(button, title) {
             button.setTitle(title, for: .normal)
             button.setTitleColor(.white, for: .normal)
             button.titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
             button.layer.cornerRadius = 40
             button.layer.masksToBounds = true
-            button.addTarget(self, action: action, for: .touchUpInside)
+            button.addTarget(self, action: #selector(calculationButtonTapped), for: .touchUpInside)
             button.snp.makeConstraints { $0.width.height.equalTo(80) }
             
             switch type {

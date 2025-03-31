@@ -8,10 +8,29 @@ import Foundation
 
 extension ViewController {
     
+    enum ButtonTapped: String {
+        case number0 = "0"
+        case number1 = "1"
+        case number2 = "2"
+        case number3 = "3"
+        case number4 = "4"
+        case number5 = "5"
+        case number6 = "6"
+        case number7 = "7"
+        case number8 = "8"
+        case number9 = "9"
+        case operAdd = "+"
+        case operSub = "-"
+        case operMul = "×"
+        case operDiv = "/"
+        case operEqual = "="
+        case ac = "AC"
+    }
+    
     // Eqaul 버튼 클릭 시 실행될 예외처리 및 계산 작업
     func calculate(expression: String) throws -> Int {
         
-        // 마지막 문자가 숫자가 아니라 연산자면 throw
+        // 마지막 글자가 연산자면 throw
         guard textValue.last != "+" &&
                 textValue.last != "-" &&
                 textValue.last != "×" &&
@@ -30,41 +49,65 @@ extension ViewController {
         }
     }
     
-    // 연산자 추가 시 실행될 메서드
-    func addOperator(_ input: String) {
-        if textValue.last != "+" &&
-        textValue.last != "-" &&
-        textValue.last != "×" &&
-        textValue.last != "/" {
-            textValue += input
-        }
-        
-        numLabel.text = textValue
-    }
-    
-    // 0을 추가 시 실행될 메서드
-    func addZero() {
-        guard textValue != "0" else { return }
-        
-        if textValue.last != "+" &&
-        textValue.last != "-" &&
-        textValue.last != "×" &&
-        textValue.last != "/" {
-            textValue += "0"
-        }
-        
-        numLabel.text = textValue
-    }
-    
-    // 0을 제외한 숫자 추가 시 실행될 메서드
+    // 숫자 버튼 클릭 시 실행될 메서드
     func addNumber(_ number: String) {
-        if textValue != "0" {
-            textValue += number
-        } else {
-            textValue = number
+        switch ButtonTapped(rawValue: number) {
+        case .operAdd, .operSub, .operMul, .operDiv:
+            if textValue.last != "+" &&
+            textValue.last != "-" &&
+            textValue.last != "×" &&
+            textValue.last != "/" {
+                textValue += number
+                numLabel.text = textValue
+            }
+            
+        case .ac:
+            textValue = "0"
+            numLabel.text = textValue
+            
+        case .number0:
+            guard textValue != "0" else {
+                numLabel.text = textValue
+                return
+            }
+            
+            if textValue.last != "+" &&
+            textValue.last != "-" &&
+            textValue.last != "×" &&
+            textValue.last != "/" {
+                textValue += "0"
+                numLabel.text = textValue
+            }
+            
+        case .number1, .number2, .number3, .number4, .number5, .number6, .number7, .number8, .number9:
+            if textValue != "0" {
+                textValue += number
+                numLabel.text = textValue
+            } else {
+                textValue = number
+                numLabel.text = textValue
+            }
+            
+        case .operEqual:
+            do {            // "="버튼을 눌렀을 때 예외처리
+                
+                textValue = try String(calculate(expression: textValue))
+                numLabel.text = textValue
+                
+            } catch CalculatorError.lastIsOperator {    // 식의 마지막 문자가 연산자일 때
+                textValue = "0"
+                numLabel.text = "Error"
+            } catch CalculatorError.failCalculation {   // 계산에 실패한 경우
+                textValue = "0"
+                numLabel.text = "Error"
+            } catch {
+                textValue = "0"
+                numLabel.text = "Unknown Error"
+            }
+            
+        default:
+            return
         }
-        
-        numLabel.text = textValue
     }
     
     // 파악 가능한 에러

@@ -41,85 +41,9 @@ class ViewController: UIViewController {
         setUpUI()
     }
     
-    // ------------------- 버튼 액션 ------------------------
-    
-    @objc func num0Tapped() {
-        addZero()
-    }
-    
-    @objc func num1Tapped() {
-        addNumber("1")
-    }
-    
-    @objc func num2Tapped() {
-        addNumber("2")
-    }
-    
-    @objc func num3Tapped() {
-        addNumber("3")
-    }
-    
-    @objc func num4Tapped() {
-        addNumber("4")
-    }
-    
-    @objc func num5Tapped() {
-        addNumber("5")
-    }
-    
-    @objc func num6Tapped() {
-        addNumber("6")
-    }
-    
-    @objc func num7Tapped() {
-        addNumber("7")
-    }
-    
-    @objc func num8Tapped() {
-        addNumber("8")
-    }
-    
-    @objc func num9Tapped() {
-        addNumber("9")
-    }
-    
-    @objc func addTapped() {
-        addOperator("+")
-    }
-    
-    @objc func subTapped() {
-        addOperator("-")
-    }
-    
-    @objc func mulTapped() {
-        addOperator("×")
-    }
-    
-    @objc func divTapped() {
-        addOperator("/")
-    }
-    
-    @objc func acTapped() {
-        textValue = "0"
-        numLabel.text = textValue
-    }
-    
-    @objc func equalTapped() {
-        do {            // "="버튼을 눌렀을 때 예외처리
-            
-            textValue = try String(calculate(expression: textValue))
-            numLabel.text = textValue
-            
-        } catch CalculatorError.lastIsOperator {    // 식의 마지막 문자가 연산자일 때
-            textValue = "0"
-            numLabel.text = "Error"
-        } catch CalculatorError.failCalculation {   // 계산에 실패한 경우
-            textValue = "0"
-            numLabel.text = "Error"
-        } catch {
-            textValue = "0"
-            numLabel.text = "Unknown Error"
-        }
+    // 버튼 액션
+    @objc func calculationButtonTapped(_ sender: UIButton) {
+        addNumber(sender.currentTitle ?? "0")
     }
     
 }
