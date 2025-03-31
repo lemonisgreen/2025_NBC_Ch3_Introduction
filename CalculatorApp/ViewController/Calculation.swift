@@ -49,23 +49,10 @@ extension ViewController {
         }
     }
     
-    // 숫자 버튼 클릭 시 실행될 메서드
+    // 버튼 클릭 시 실행될 메서드
     func addNumber(_ number: String) {
         switch ButtonTapped(rawValue: number) {
-        case .operAdd, .operSub, .operMul, .operDiv:
-            if textValue.last != "+" &&
-            textValue.last != "-" &&
-            textValue.last != "×" &&
-            textValue.last != "/" {
-                textValue += number
-                numLabel.text = textValue
-            }
-            
-        case .ac:
-            textValue = "0"
-            numLabel.text = textValue
-            
-        case .number0:
+        case .number0:                                  // 숫자0 버튼
             guard textValue != "0" else {
                 numLabel.text = textValue
                 return
@@ -79,6 +66,7 @@ extension ViewController {
                 numLabel.text = textValue
             }
             
+            // 숫자 버튼
         case .number1, .number2, .number3, .number4, .number5, .number6, .number7, .number8, .number9:
             if textValue != "0" {
                 textValue += number
@@ -88,7 +76,20 @@ extension ViewController {
                 numLabel.text = textValue
             }
             
-        case .operEqual:
+        case .ac:                                       // AC 버튼
+            textValue = "0"
+            numLabel.text = textValue
+            
+        case .operAdd, .operSub, .operMul, .operDiv:    // 연산자 버튼
+            if textValue.last != "+" &&
+            textValue.last != "-" &&
+            textValue.last != "×" &&
+            textValue.last != "/" {
+                textValue += number
+                numLabel.text = textValue
+            }
+            
+        case .operEqual:    // Equal 버튼
             do {            // "="버튼을 눌렀을 때 예외처리
                 
                 textValue = try String(calculate(expression: textValue))
