@@ -6,6 +6,8 @@ class ViewController: UIViewController {
     let label = UILabel() // 계산기 숫자 출력
     let verticalStackView = UIStackView() // 수직 스택뷰
     
+    let calculateModel = Calculate() // 연산 기능 담당 클래스 객체 생성
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -171,7 +173,7 @@ class ViewController: UIViewController {
             if label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+" {
                 return
             } else {
-                let result = calculate(expression:label.text!)
+                let result = calculateModel.calculate(expression:label.text!)
                 label.text = String(result!)
             }
             
@@ -205,16 +207,16 @@ class ViewController: UIViewController {
      - expression: 라벨의 수식
      - Returns:
      */
-    func calculate(expression: String) -> Int? {
-        let expression = NSExpression(format: expression) // 객체 생성
-        
-        // 표현식 평가, 실제로 계산식 실행
-        if let result = expression.expressionValue(with: nil, context: nil) as? Int {
-            return result // 계산 결과 반환
-        } else {
-            return nil // 틀린 수식은 반환 X
-        }
-    }
+//    func calculate(expression: String) -> Int? {
+//        let expression = NSExpression(format: expression) // 객체 생성
+//        
+//        // 표현식 평가, 실제로 계산식 실행
+//        if let result = expression.expressionValue(with: nil, context: nil) as? Int {
+//            return result // 계산 결과 반환
+//        } else {
+//            return nil // 틀린 수식은 반환 X
+//        }
+//    }
 }
 
 #Preview { ViewController() }

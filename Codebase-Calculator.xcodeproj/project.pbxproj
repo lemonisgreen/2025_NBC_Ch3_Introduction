@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		ED539D102D9BD9A100DF5190 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = ED539D0F2D9BD99A00DF5190 /* .gitignore */; };
 		ED539D142D9BDA9500DF5190 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = ED539D132D9BDA9500DF5190 /* SnapKit */; };
 		ED539D162D9BDFC200DF5190 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = ED539D152D9BDFBB00DF5190 /* README.md */; };
+		EDF208B62D9C122B007EECCD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = EDF208B52D9C1218007EECCD /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,8 +33,8 @@
 		ED539CDB2D9BD93600DF5190 /* Codebase-Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Codebase-Calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED539CF12D9BD93700DF5190 /* Codebase-CalculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Codebase-CalculatorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED539CFB2D9BD93700DF5190 /* Codebase-CalculatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Codebase-CalculatorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED539D0F2D9BD99A00DF5190 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		ED539D152D9BDFBB00DF5190 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		EDF208B52D9C1218007EECCD /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -97,8 +97,8 @@
 		ED539CD22D9BD93600DF5190 = {
 			isa = PBXGroup;
 			children = (
+				EDF208B52D9C1218007EECCD /* .gitignore */,
 				ED539D152D9BDFBB00DF5190 /* README.md */,
-				ED539D0F2D9BD99A00DF5190 /* .gitignore */,
 				ED539CDD2D9BD93600DF5190 /* Codebase-Calculator */,
 				ED539CF42D9BD93700DF5190 /* Codebase-CalculatorTests */,
 				ED539CFE2D9BD93700DF5190 /* Codebase-CalculatorUITests */,
@@ -248,7 +248,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED539D102D9BD9A100DF5190 /* .gitignore in Resources */,
+				EDF208B62D9C122B007EECCD /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
