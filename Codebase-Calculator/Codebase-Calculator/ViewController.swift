@@ -10,29 +10,30 @@ import SnapKit
 
 class ViewController: UIViewController {
     
-    let label = UILabel()
+    let label = UILabel() // 텍스트 출력
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         configureUI()
     }
     
     func configureUI() {
-        label.text = "Hello World"
+        view.backgroundColor = .black
+        
+        label.text = "12345"
         label.textColor = .white
-        label.textAlignment = .center
-        label.font = .boldSystemFont(ofSize: 20)
+        label.textAlignment = .right
+        label.font = .boldSystemFont(ofSize: 60)
         
         view.addSubview(label)
         
         label.snp.makeConstraints {
-            $0.width.height.equalTo(200)
-            $0.center.equalToSuperview()
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalToSuperview().inset(30)
+            $0.top.equalToSuperview().offset(200)
+            $0.height.equalTo(100)
         }
     }
-
-
 }
 
