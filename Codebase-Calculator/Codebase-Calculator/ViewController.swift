@@ -5,7 +5,7 @@ class ViewController: UIViewController {
     
     let label = UILabel() // 계산기 숫자 출력
     let verticalStackView = UIStackView() // 수직 스택뷰
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         label.font = .boldSystemFont(ofSize: 60) // 글자 스타일 지정
         
         view.addSubview(label) // 뷰 위에 라벨 추가
-    
+        
         // 라벨 제약 조건 추가
         label.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(30)
@@ -91,7 +91,7 @@ class ViewController: UIViewController {
      버튼 생성 메소드
      
      - Parameters:
-        - title: 생성할 버든의 이름 설정
+     - title: 생성할 버든의 이름 설정
      - Returns : 생성한 버튼
      */
     func makeButton(title: String) -> UIButton {
@@ -102,7 +102,7 @@ class ViewController: UIViewController {
          버튼 색을 오랜지 색으로 변경한다.
          */
         let orange = ["+", "-", "*", "/", "AC", "="]
-
+        
         for i in orange {
             if title.contains(i) {
                 button.backgroundColor = .orange
@@ -134,13 +134,13 @@ class ViewController: UIViewController {
         
         return button
     }
-
+    
     // - MARK: - 스택뷰 생성 메소드
     /**
      버튼을 담고있는 스택뷰 생성 메소드
      
      - Parameters:
-        - buttonTitle: 스택뷰에 넣을 버튼 이름의 배열
+     - buttonTitle: 스택뷰에 넣을 버튼 이름의 배열
      - Returns: 생성한 스택뷰
      */
     func makeHorizontalStackView(buttonTitle : [String]) -> UIStackView {
@@ -161,6 +161,12 @@ class ViewController: UIViewController {
          옵셔널을 언래핑을 위해 guard let 사용
          */
         guard let tappedButtonTitle = button.currentTitle else { return }
+        
+        // AC 버튼이 눌리면, 라벨을 0으로 만들기
+        if tappedButtonTitle == "AC" {
+            label.text = "0"
+            return
+        }
         
         // 첫 글자가 0 이면 없애고, 아니면 글자만 추가
         if label.text == "0" {
