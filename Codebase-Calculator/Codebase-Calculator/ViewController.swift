@@ -11,7 +11,7 @@ import SnapKit
 class ViewController: UIViewController {
     
     let label = UILabel() // 계산기 숫자 출력
-    let verticalStackView = UIStackView()
+    let verticalStackView = UIStackView() // 수직 스택뷰
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     func configureUI() {
         view.backgroundColor = .black // 배경색 검은색 지정
         
-        // 라벨 속성 정의
+        // - MARK: - 라벨 속성 정의
         label.text = "12345" // 기본 텍스트 지정
         label.textColor = .white // 글자색 지정
         label.textAlignment = .right // 글자 정렬 기준 지정
@@ -38,7 +38,7 @@ class ViewController: UIViewController {
             $0.height.equalTo(100)
         }
         
-        // 스택뷰 생성 메소드를 이용하여 스택뷰 생성
+        // - MARK: - 스택뷰 생성 메소드를 이용하여 스택뷰 생성
         // 첫째 줄 스택뷰
         let stackView = makeHorizontalStackView(buttonTitle: ["7", "8", "9", "+"])
         
@@ -72,7 +72,7 @@ class ViewController: UIViewController {
         }
         
         
-        // 수직 스택뷰 속성 정의
+        // - MARK: - 수직 스택뷰 속성 정의
         verticalStackView.axis = .vertical
         verticalStackView.backgroundColor = .black
         verticalStackView.spacing = 10
@@ -93,6 +93,7 @@ class ViewController: UIViewController {
         
     }
     
+    // - MARK: - 버튼 생성 메소드
     /**
      버튼 생성 메소드
      
@@ -108,31 +109,28 @@ class ViewController: UIViewController {
          버튼 색을 오랜지 색으로 변경한다.
          */
         let orange = ["+", "-", "*", "/", "AC", "="]
-        
+
         for i in orange {
             if title.contains(i) {
-                button.setTitle(title, for: .normal)
-                button.titleLabel?.font = .boldSystemFont(ofSize: 30)
                 button.backgroundColor = .orange
-                button.layer.cornerRadius = 40
-                button.snp.makeConstraints { $0.width.height.equalTo(80)}
-                
-                return button
+                break
+            } else {
+                button.backgroundColor = UIColor(
+                    red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0
+                )
             }
         }
         
         button.setTitle(title, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 30)
-        button.backgroundColor = UIColor(
-            red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0
-        )
+        
         button.layer.cornerRadius = 40
         button.snp.makeConstraints { $0.width.height.equalTo(80)}
         
         return button
     }
 
-    // - MARK: 스택뷰 생성 메소드
+    // - MARK: - 스택뷰 생성 메소드
     /**
      버튼을 담고있는 스택뷰 생성 메소드
      
