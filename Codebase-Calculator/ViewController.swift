@@ -176,7 +176,14 @@ class ViewController: UIViewController {
                 let result = calculateModel.calculate(expression:label.text!)
                 label.text = String(result!)
             }
-            
+        case "0":
+            // 예외처리: 연산자 뒤에 "0" 올 수 없게 처리
+            if label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+"
+            {
+                return
+            } else {
+                label.text! += tappedButtonTitle
+            }
         case "/","*","-","+":
             // 예외처리: 마지막 계산식에 연산자가 있으면, 더 이상 연산자를 사용 못하게 처리
             if label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+"
