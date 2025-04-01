@@ -10,6 +10,22 @@ import UIKit
 class ViewController: UIViewController {
     
     let label = UILabel()
+    
+    let acButton: UIButton = UIButton()
+    let zeroButton: UIButton = UIButton()
+    let equalButton: UIButton = UIButton()
+    let devidButton: UIButton = UIButton()
+    
+    let oneButton: UIButton = UIButton()
+    let twoButton: UIButton = UIButton()
+    let threeButton: UIButton = UIButton()
+    let multipleButton: UIButton = UIButton()
+    
+    let fourButton: UIButton = UIButton()
+    let fiveButton: UIButton = UIButton()
+    let sixButton: UIButton = UIButton()
+    let minuseButton: UIButton = UIButton()
+    
     let sevenButton: UIButton = UIButton()
     let eightButton: UIButton = UIButton()
     let nineButton: UIButton = UIButton()
@@ -17,12 +33,53 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        basicButtonUI(acButton, title: "AC")
+        basicButtonUI(zeroButton, title: "0")
+        basicButtonUI(equalButton, title: "=")
+        basicButtonUI(devidButton, title: "/")
+        
+        basicButtonUI(oneButton, title: "1")
+        basicButtonUI(twoButton, title: "2")
+        basicButtonUI(threeButton, title: "3")
+        basicButtonUI(multipleButton, title: "*")
+        
+        basicButtonUI(fourButton, title: "4")
+        basicButtonUI(fiveButton, title: "5")
+        basicButtonUI(sixButton, title: "6")
+        basicButtonUI(minuseButton, title: "-")
+        
+        basicButtonUI(sevenButton, title: "7")
+        basicButtonUI(eightButton, title: "8")
+        basicButtonUI(nineButton, title: "9")
+        basicButtonUI(plusButton, title: "+")
         
         screenNumberUI()
-        sevenButtonUI()
+     
+        let HorizontalStackView1 = makeHorizontalStackView([sevenButton, eightButton, nineButton, plusButton])
+        let HorizontalStackView2 = makeHorizontalStackView([fourButton, fiveButton, sixButton, minuseButton])
+        let HorizontalStackView3 = makeHorizontalStackView([oneButton, twoButton, threeButton, multipleButton])
+        let HorizontalStackView4 = makeHorizontalStackView([acButton, zeroButton, equalButton, devidButton])
         
     }
+    
+   private func makeHorizontalStackView(_ buttons: [UIButton]) -> UIStackView {
+        
+        let stackView = UIStackView(arrangedSubviews: buttons)
+        
+        stackView.axis = .horizontal
+        stackView.backgroundColor = .black
+        stackView.spacing = 10
+        stackView.distribution = .fillEqually
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.heightAnchor.constraint(equalToConstant: 80)
+        ])
+        
+        return stackView
+    }
+    
     private func screenNumberUI() {
         view.backgroundColor = .black
         label.text = "12345"
@@ -40,18 +97,20 @@ class ViewController: UIViewController {
         ])
     }
     
-    private func sevenButtonUI() {
-        sevenButton.titleLabel?.text = "7"
-        sevenButton.titleLabel?.textColor = .white
-        sevenButton.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
-        sevenButton.titleLabel?.font = .systemFont(ofSize: 30)
-        sevenButton.layer.cornerRadius = 40
+    private func basicButtonUI(_ button: UIButton, title: String) {
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.textColor = .white
+        button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+        button.titleLabel?.font = .systemFont(ofSize: 30)
+        button.layer.cornerRadius = 40
         
-        view.addSubview(sevenButton)
-        sevenButton.translatesAutoresizingMaskIntoConstraints = false
+        button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            sevenButton.heightAnchor.constraint(equalToConstant: 80),
-            sevenButton.widthAnchor.constraint(equalToConstant: 80)
+            button.heightAnchor.constraint(equalToConstant: 80),
+            button.widthAnchor.constraint(equalToConstant: 80)
         ])
     }
 }
+
+#Preview {
+    ViewController()}
