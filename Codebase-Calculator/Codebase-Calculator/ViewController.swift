@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  Codebase-Calculator
-//
-//  Created by NH on 4/1/25.
-//
-
 import UIKit
 import SnapKit
 
@@ -124,6 +117,16 @@ class ViewController: UIViewController {
         button.setTitle(title, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 30)
         
+        /*
+         버튼의 가로 길이 구하기
+         - 수직 스택뷰 너비: 350,
+         - 수직 스택뷰 spacing: 10 * 3 (수평 스택뷰가 4개가 있으므로)
+         총 너비인 350에서 spacing 값을 빼고 버튼 개수인 4로 나누면 버튼의 너비가 된다.
+         따라서 (350 - 10 * 3) / 4 = 80 이된다.
+         
+         원형 버튼은 conrRadius의 값을 너비의 절반 값으로 설정하면 된다.
+         버튼의 너비가 80 이므로 40을 주면 원형 버튼이 된다.
+         */
         button.layer.cornerRadius = 40
         button.snp.makeConstraints { $0.width.height.equalTo(80)}
         
