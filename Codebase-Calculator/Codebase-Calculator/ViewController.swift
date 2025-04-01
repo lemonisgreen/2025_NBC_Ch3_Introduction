@@ -162,17 +162,59 @@ class ViewController: UIViewController {
          */
         guard let tappedButtonTitle = button.currentTitle else { return }
         
-        // AC 버튼이 눌리면, 라벨을 0으로 만들기
-        if tappedButtonTitle == "AC" {
+        switch tappedButtonTitle {
+        case "AC":
             label.text = "0"
             return
+        case "=":
+            // 예외처리: 계산식이 연산자에서 끝났으면 아무동작 하지 않게 처리
+            if label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+" {
+                return
+            } else {
+                let result = calculate(expression:label.text!)
+                label.text = String(result!)
+            }
+            
+        case "/","*","-","+":
+            // 예외처리: 마지막 계산식에 연산자가 있으면, 더 이상 연산자를 사용 못하게 처리
+            if label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+"
+            {
+                return
+            }
+            
+            // 예외처리: 첫 계산식이 0과 연산자가 될 수 없게 처리
+            if  label.text == "0" || label.text == "/" || label.text == "*" || label.text == "-" || label.text == "+" {
+                label.text = tappedButtonTitle
+            } else {
+                label.text! += tappedButtonTitle
+            }
+        default:
+            // 예외처리: 첫 계산식이 0이 될 수 없게 처리
+            if label.text == "0" {
+                label.text! = tappedButtonTitle
+            } else {
+                label.text! += tappedButtonTitle
+            }
         }
+    }
+    
+    /**
+     계산 수행하는 메소드
+     
+     - Parameters:
+     - expression: 라벨의 수식
+     - Returns:
+     */
+    func calculate(expression: String) -> Int? {
+        let expression = NSExpression(format: expression) // 객체 생성
         
-        // 첫 글자가 0 이면 없애고, 아니면 글자만 추가
-        if label.text == "0" {
-            label.text = tappedButtonTitle
+        // 표현식 평가, 실제로 계산식 실행
+        if let result = expression.expressionValue(with: nil, context: nil) as? Int {
+            return result // 계산 결과 반환
         } else {
-            label.text! += tappedButtonTitle
+            return nil // 틀린 수식은 반환 X
         }
     }
 }
+
+#Preview { ViewController() }
