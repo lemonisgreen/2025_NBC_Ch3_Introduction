@@ -61,6 +61,21 @@ class ViewController: UIViewController {
         let HorizontalStackView3 = makeHorizontalStackView([oneButton, twoButton, threeButton, multipleButton])
         let HorizontalStackView4 = makeHorizontalStackView([acButton, zeroButton, equalButton, devidButton])
         
+        let verticalStackView = UIStackView(arrangedSubviews: [HorizontalStackView1, HorizontalStackView2, HorizontalStackView3, HorizontalStackView4])
+        
+        verticalStackView.axis = .vertical
+        verticalStackView.backgroundColor = .black
+        verticalStackView.spacing = 10
+        verticalStackView.distribution = .fillEqually
+        
+        view.addSubview(verticalStackView)
+        
+        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            verticalStackView.topAnchor.constraint(equalTo:label.bottomAnchor, constant: 60),
+            verticalStackView.widthAnchor.constraint(equalToConstant: 350),
+            verticalStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            ])
     }
     
    private func makeHorizontalStackView(_ buttons: [UIButton]) -> UIStackView {
