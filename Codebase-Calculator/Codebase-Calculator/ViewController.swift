@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         view.backgroundColor = .black // 배경색 검은색 지정
         
         // - MARK: - 라벨 속성 정의
-        label.text = "12345" // 기본 텍스트 지정
+        label.text = "0" // 기본 텍스트 지정
         label.textColor = .white // 글자색 지정
         label.textAlignment = .right // 글자 정렬 기준 지정
         label.font = .boldSystemFont(ofSize: 60) // 글자 스타일 지정
@@ -128,6 +128,8 @@ class ViewController: UIViewController {
          버튼의 너비가 80 이므로 40을 주면 원형 버튼이 된다.
          */
         button.layer.cornerRadius = 40
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchDown)
+        
         button.snp.makeConstraints { $0.width.height.equalTo(80)}
         
         return button
@@ -148,5 +150,23 @@ class ViewController: UIViewController {
         stackView.spacing = 10
         stackView.distribution = .fillEqually
         return stackView
+    }
+    
+    @objc
+    private func buttonTapped(button: UIButton) {
+        /*
+         최근에 눌린 버튼의 이름을 가저오는 변수
+         currentTitle 사용하면 최근 사용된 버튼의 title을 가져옴
+         
+         옵셔널을 언래핑을 위해 guard let 사용
+         */
+        guard let tappedButtonTitle = button.currentTitle else { return }
+        
+        // 첫 글자가 0 이면 없애고, 아니면 글자만 추가
+        if label.text == "0" {
+            label.text = tappedButtonTitle
+        } else {
+            label.text! += tappedButtonTitle
+        }
     }
 }
