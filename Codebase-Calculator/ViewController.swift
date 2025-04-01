@@ -178,7 +178,7 @@ class ViewController: UIViewController {
             }
         case "0":
             // 예외처리: 연산자 뒤에 "0" 올 수 없게 처리
-            if label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+"
+            if label.text == "0" || label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+"
             {
                 return
             } else {
@@ -193,7 +193,7 @@ class ViewController: UIViewController {
             
             // 예외처리: 첫 계산식이 0과 연산자가 될 수 없게 처리
             if  label.text == "0" || label.text == "/" || label.text == "*" || label.text == "-" || label.text == "+" {
-                label.text = tappedButtonTitle
+                return
             } else {
                 label.text! += tappedButtonTitle
             }
