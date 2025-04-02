@@ -97,7 +97,7 @@ class ViewController: UIViewController {
      - Returns : 생성한 버튼
      */
     func makeButton(title: String) -> UIButton {
-        let button = UIButton()
+        let button = UIButton() // 버튼 객체 생성
         
         /*
          버튼 이름이 특정 문자와 일치하면
@@ -116,8 +116,8 @@ class ViewController: UIViewController {
             }
         }
         
-        button.setTitle(title, for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 30)
+        button.setTitle(title, for: .normal) // 버튼 제목 설정
+        button.titleLabel?.font = .boldSystemFont(ofSize: 30) // 버튼 제목 스타일 및 크기 설정
         
         /*
          버튼의 가로 길이 구하기
@@ -130,8 +130,9 @@ class ViewController: UIViewController {
          버튼의 너비가 80 이므로 40을 주면 원형 버튼이 된다.
          */
         button.layer.cornerRadius = 40
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchDown)
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchDown) // 버튼 액션 설정
         
+        // 버튼 제약 설정
         button.snp.makeConstraints { $0.width.height.equalTo(80)}
         
         return button
@@ -146,11 +147,11 @@ class ViewController: UIViewController {
      - Returns: 생성한 스택뷰
      */
     func makeHorizontalStackView(buttonTitle : [String]) -> UIStackView {
-        let buttons = buttonTitle.map { makeButton(title: $0) }
-        let stackView = UIStackView(arrangedSubviews: buttons)
-        stackView.axis = .horizontal
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
+        let buttons = buttonTitle.map { makeButton(title: $0) } // makeButton 메소드를 이용하여 버튼 생성
+        let stackView = UIStackView(arrangedSubviews: buttons) // 스택뷰에 윗줄에서 만들 버튼 객체 삽입
+        stackView.axis = .horizontal // 스택뷰에 수평 속성 추가
+        stackView.spacing = 10 // 스택뷰 요소 간격 설정
+        stackView.distribution = .fillEqually // 스택뷰 요소 분산 설정
         return stackView
     }
     
@@ -164,6 +165,7 @@ class ViewController: UIViewController {
          */
         guard let tappedButtonTitle = button.currentTitle else { return }
         
+        // 누른 버튼에 따른 로직 구현
         switch tappedButtonTitle {
         case "AC":
             label.text = "0"
@@ -173,16 +175,15 @@ class ViewController: UIViewController {
             if label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+" {
                 return
             } else {
-                let result = calculateModel.calculate(expression:label.text!)
-                label.text = String(result!)
+                let result = calculateModel.calculate(expression:label.text!) // 연산 수행
+                label.text = String(result!) // 결과 출력
             }
         case "0":
             // 예외처리: 연산자 뒤에 "0" 올 수 없게 처리
-            if label.text == "0" || label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+"
-            {
+            if label.text == "0" || label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+" {
                 return
             } else {
-                label.text! += tappedButtonTitle
+                label.text! += tappedButtonTitle // 예외처리 상황이 아니면 계산식에 "0" 추가
             }
         case "/","*","-","+":
             // 예외처리: 마지막 계산식에 연산자가 있으면, 더 이상 연산자를 사용 못하게 처리
@@ -195,35 +196,17 @@ class ViewController: UIViewController {
             if  label.text == "0" || label.text == "/" || label.text == "*" || label.text == "-" || label.text == "+" {
                 return
             } else {
-                label.text! += tappedButtonTitle
+                label.text! += tappedButtonTitle // 예외처리 상황이 아니면 계산식에 추가
             }
         default:
             // 예외처리: 첫 계산식이 0이 될 수 없게 처리
             if label.text == "0" {
-                label.text! = tappedButtonTitle
+                label.text! = tappedButtonTitle // "0" 을 없애고 숫자를 추가
             } else {
-                label.text! += tappedButtonTitle
+                label.text! += tappedButtonTitle // 예외처리 상황이 아니면 계산식에 추가
             }
         }
     }
-    
-    /**
-     계산 수행하는 메소드
-     
-     - Parameters:
-     - expression: 라벨의 수식
-     - Returns:
-     */
-//    func calculate(expression: String) -> Int? {
-//        let expression = NSExpression(format: expression) // 객체 생성
-//        
-//        // 표현식 평가, 실제로 계산식 실행
-//        if let result = expression.expressionValue(with: nil, context: nil) as? Int {
-//            return result // 계산 결과 반환
-//        } else {
-//            return nil // 틀린 수식은 반환 X
-//        }
-//    }
 }
 
 #Preview { ViewController() }
