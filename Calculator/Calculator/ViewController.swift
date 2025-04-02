@@ -88,19 +88,19 @@ class ViewController: UIViewController {
     
     private func makeHorizontalStackView(_ buttons: [UIButton]) -> UIStackView {
         
-        let stackView = UIStackView(arrangedSubviews: buttons)
+        let horizontalStackView = UIStackView(arrangedSubviews: buttons)
         
-        stackView.axis = .horizontal
-        stackView.backgroundColor = .black
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
+        horizontalStackView.axis = .horizontal
+        horizontalStackView.backgroundColor = .black
+        horizontalStackView.spacing = 10
+        horizontalStackView.distribution = .fillEqually
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stackView.heightAnchor.constraint(equalToConstant: 80)
+            horizontalStackView.heightAnchor.constraint(equalToConstant: 80)
         ])
         
-        return stackView
+        return horizontalStackView
     }
     
     private func screenNumberUI() {
