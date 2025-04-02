@@ -35,23 +35,23 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         basicButtonUI(acButton, "AC", #selector(buttonTapped), .orange)
-        basicButtonUI(zeroButton, "0", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(zeroButton, "0", #selector(buttonTapped), .customGray)
         basicButtonUI(equalButton, "=", #selector(buttonTapped), .orange)
         basicButtonUI(devidButton, "/", #selector(buttonTapped), .orange)
         
-        basicButtonUI(oneButton, "1", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        basicButtonUI(twoButton, "2", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        basicButtonUI(threeButton, "3", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(oneButton, "1", #selector(buttonTapped), .customGray)
+        basicButtonUI(twoButton, "2", #selector(buttonTapped), .customGray)
+        basicButtonUI(threeButton, "3", #selector(buttonTapped), .customGray)
         basicButtonUI(multipleButton, "*", #selector(buttonTapped), .orange)
         
-        basicButtonUI(fourButton, "4", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        basicButtonUI(fiveButton, "5", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        basicButtonUI(sixButton, "6", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(fourButton, "4", #selector(buttonTapped), .customGray)
+        basicButtonUI(fiveButton, "5", #selector(buttonTapped), .customGray)
+        basicButtonUI(sixButton, "6", #selector(buttonTapped), .customGray)
         basicButtonUI(minuseButton, "-", #selector(buttonTapped), .orange)
         
-        basicButtonUI(sevenButton, "7", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        basicButtonUI(eightButton, "8", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        basicButtonUI(nineButton, "9", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(sevenButton, "7", #selector(buttonTapped), .customGray)
+        basicButtonUI(eightButton, "8", #selector(buttonTapped), .customGray)
+        basicButtonUI(nineButton, "9", #selector(buttonTapped), .customGray)
         basicButtonUI(plusButton, "+", #selector(buttonTapped), .orange)
         
         screenNumberUI()
@@ -61,7 +61,7 @@ class ViewController: UIViewController {
         let HorizontalStackView3 = makeHorizontalStackView([oneButton, twoButton, threeButton, multipleButton])
         let HorizontalStackView4 = makeHorizontalStackView([acButton, zeroButton, equalButton, devidButton])
         
-        let verticalStackView = makeVerticalStackView([HorizontalStackView1, HorizontalStackView2, HorizontalStackView3, HorizontalStackView4])
+        makeVerticalStackView([HorizontalStackView1, HorizontalStackView2, HorizontalStackView3, HorizontalStackView4])
     }
     
     private func makeVerticalStackView(_ views: [UIView]) -> UIStackView {
@@ -144,6 +144,15 @@ class ViewController: UIViewController {
             label.text = "0"
         } else {
             label.text = (label.text ?? "") + buttonTitle
+        }
+    }
+    
+    func calculate(expression: String) -> Int? {
+            let expression = NSExpression(format: expression)
+        if let result = expression.expressionValue(with: nil, context: nil) as? Int {
+            return result
+        } else {
+            return nil
         }
     }
 }
