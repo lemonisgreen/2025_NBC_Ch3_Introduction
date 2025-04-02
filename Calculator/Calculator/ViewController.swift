@@ -34,25 +34,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        basicButtonUI(acButton, title: "AC")
-        basicButtonUI(zeroButton, title: "0")
-        basicButtonUI(equalButton, title: "=")
-        basicButtonUI(devidButton, title: "/")
+        basicButtonUI(acButton, "AC", #selector(buttonTapped), .orange)
+        basicButtonUI(zeroButton, "0", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(equalButton, "=", #selector(buttonTapped), .orange)
+        basicButtonUI(devidButton, "/", #selector(buttonTapped), .orange)
         
-        basicButtonUI(oneButton, title: "1")
-        basicButtonUI(twoButton, title: "2")
-        basicButtonUI(threeButton, title: "3")
-        basicButtonUI(multipleButton, title: "*")
+        basicButtonUI(oneButton, "1", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(twoButton, "2", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(threeButton, "3", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(multipleButton, "*", #selector(buttonTapped), .orange)
         
-        basicButtonUI(fourButton, title: "4")
-        basicButtonUI(fiveButton, title: "5")
-        basicButtonUI(sixButton, title: "6")
-        basicButtonUI(minuseButton, title: "-")
+        basicButtonUI(fourButton, "4", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(fiveButton, "5", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(sixButton, "6", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(minuseButton, "-", #selector(buttonTapped), .orange)
         
-        basicButtonUI(sevenButton, title: "7")
-        basicButtonUI(eightButton, title: "8")
-        basicButtonUI(nineButton, title: "9")
-        basicButtonUI(plusButton, title: "+")
+        basicButtonUI(sevenButton, "7", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(eightButton, "8", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(nineButton, "9", #selector(buttonTapped), UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        basicButtonUI(plusButton, "+", #selector(buttonTapped), .orange)
         
         screenNumberUI()
      
@@ -67,6 +67,7 @@ class ViewController: UIViewController {
         verticalStackView.backgroundColor = .black
         verticalStackView.spacing = 10
         verticalStackView.distribution = .fillEqually
+        verticalStackView.isUserInteractionEnabled = true
         
         view.addSubview(verticalStackView)
         
@@ -112,10 +113,11 @@ class ViewController: UIViewController {
         ])
     }
     
-    private func basicButtonUI(_ button: UIButton, title: String) {
+    private func basicButtonUI(_ button: UIButton, _ title: String, _ action: Selector, _ backgroundColor: UIColor) {
         button.setTitle(title, for: .normal)
+        button.addTarget(self, action: action, for: .touchUpInside)
         button.titleLabel?.textColor = .white
-        button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+        button.backgroundColor = backgroundColor
         button.titleLabel?.font = .systemFont(ofSize: 30)
         button.layer.cornerRadius = 40
         
@@ -124,6 +126,10 @@ class ViewController: UIViewController {
             button.heightAnchor.constraint(equalToConstant: 80),
             button.widthAnchor.constraint(equalToConstant: 80)
         ])
+    }
+    
+    @objc private func buttonTapped() {
+        
     }
 }
 
