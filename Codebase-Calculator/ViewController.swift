@@ -103,17 +103,15 @@ class ViewController: UIViewController {
          버튼 이름이 특정 문자와 일치하면
          버튼 색을 오랜지 색으로 변경한다.
          */
-        let orange = ["+", "-", "*", "/", "AC", "="]
+        let orange = ["+", "-", "*", "/", "AC", "="] // 오렌지 색 버튼으로 만들 문자 배열
         
-        for i in orange {
-            if title.contains(i) {
-                button.backgroundColor = .orange
-                break
-            } else {
-                button.backgroundColor = UIColor(
-                    red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0
-                )
-            }
+        // 버튼 제목이 오렌지 배열에 포함되면 색을 오렌지 색으로, 아니면 회식으로 설정
+        if orange.contains(title) {
+            button.backgroundColor = .orange
+        } else {
+            button.backgroundColor = UIColor(
+                red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0
+            )
         }
         
         button.setTitle(title, for: .normal) // 버튼 제목 설정
