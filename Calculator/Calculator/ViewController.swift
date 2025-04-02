@@ -34,25 +34,31 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        basicButtonUI(acButton, "AC", #selector(buttonTapped), .orange)
-        basicButtonUI(zeroButton, "0", #selector(buttonTapped), .customGray)
-        basicButtonUI(equalButton, "=", #selector(buttonTapped), .orange)
-        basicButtonUI(devidButton, "/", #selector(buttonTapped), .orange)
+        let buttons: [(UIButton, String, UIColor)] = [
+            (acButton, "AC", .orange),
+            (zeroButton, "0", .customGray),
+            (equalButton, "=", .orange),
+            (devidButton, "/", .orange),
+            
+            (oneButton, "1", .customGray),
+            (twoButton, "2", .customGray),
+            (threeButton, "3", .customGray),
+            (multipleButton, "*", .orange),
+            
+            (fourButton, "4", .customGray),
+            (fiveButton, "5", .customGray),
+            (sixButton, "6", .customGray),
+            (minuseButton, "-", .orange),
+            
+            (sevenButton, "7", .customGray),
+            (eightButton, "8", .customGray),
+            (nineButton, "9", .customGray),
+            (plusButton, "+", .orange)
+        ]
         
-        basicButtonUI(oneButton, "1", #selector(buttonTapped), .customGray)
-        basicButtonUI(twoButton, "2", #selector(buttonTapped), .customGray)
-        basicButtonUI(threeButton, "3", #selector(buttonTapped), .customGray)
-        basicButtonUI(multipleButton, "*", #selector(buttonTapped), .orange)
-        
-        basicButtonUI(fourButton, "4", #selector(buttonTapped), .customGray)
-        basicButtonUI(fiveButton, "5", #selector(buttonTapped), .customGray)
-        basicButtonUI(sixButton, "6", #selector(buttonTapped), .customGray)
-        basicButtonUI(minuseButton, "-", #selector(buttonTapped), .orange)
-        
-        basicButtonUI(sevenButton, "7", #selector(buttonTapped), .customGray)
-        basicButtonUI(eightButton, "8", #selector(buttonTapped), .customGray)
-        basicButtonUI(nineButton, "9", #selector(buttonTapped), .customGray)
-        basicButtonUI(plusButton, "+", #selector(buttonTapped), .orange)
+        for (button, title, backgroundColor) in buttons {
+            basicButtonUI(button, title, #selector(buttonTapped), backgroundColor)
+        }
         
         screenNumberUI()
         
@@ -148,7 +154,7 @@ class ViewController: UIViewController {
     }
     
     func calculate(expression: String) -> Int? {
-            let expression = NSExpression(format: expression)
+        let expression = NSExpression(format: expression)
         if let result = expression.expressionValue(with: nil, context: nil) as? Int {
             return result
         } else {
