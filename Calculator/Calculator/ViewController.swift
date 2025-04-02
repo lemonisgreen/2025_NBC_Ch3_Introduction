@@ -55,7 +55,7 @@ class ViewController: UIViewController {
         basicButtonUI(plusButton, "+", #selector(buttonTapped), .orange)
         
         screenNumberUI()
-     
+        
         let HorizontalStackView1 = makeHorizontalStackView([sevenButton, eightButton, nineButton, plusButton])
         let HorizontalStackView2 = makeHorizontalStackView([fourButton, fiveButton, sixButton, minuseButton])
         let HorizontalStackView3 = makeHorizontalStackView([oneButton, twoButton, threeButton, multipleButton])
@@ -76,10 +76,10 @@ class ViewController: UIViewController {
             verticalStackView.topAnchor.constraint(equalTo:label.bottomAnchor, constant: 60),
             verticalStackView.widthAnchor.constraint(equalToConstant: 350),
             verticalStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-            ])
+        ])
     }
     
-   private func makeHorizontalStackView(_ buttons: [UIButton]) -> UIStackView {
+    private func makeHorizontalStackView(_ buttons: [UIButton]) -> UIStackView {
         
         let stackView = UIStackView(arrangedSubviews: buttons)
         
@@ -98,7 +98,7 @@ class ViewController: UIViewController {
     
     private func screenNumberUI() {
         view.backgroundColor = .black
-        label.text = "12345"
+        label.text = "0"
         label.textColor = .white
         label.font = .systemFont(ofSize: 60, weight: .bold)
         label.textAlignment = .right
@@ -128,8 +128,14 @@ class ViewController: UIViewController {
         ])
     }
     
-    @objc private func buttonTapped() {
+    @objc private func buttonTapped(_ sender: UIButton) {
+        guard let buttonTitle = sender.title(for: .normal) else { return }
         
+        if label.text == "0" {
+            label.text = buttonTitle
+        } else {
+            label.text = (label.text ?? "") + buttonTitle
+        }
     }
 }
 
