@@ -133,6 +133,8 @@ class ViewController: UIViewController {
         
         if label.text == "0" {
             label.text = buttonTitle
+        } else if buttonTitle == "AC" {
+            label.text = "0"
         } else {
             label.text = (label.text ?? "") + buttonTitle
         }
