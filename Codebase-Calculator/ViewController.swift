@@ -22,6 +22,8 @@ class ViewController: UIViewController {
         label.textColor = .white // 글자색 지정
         label.textAlignment = .right // 글자 정렬 기준 지정
         label.font = .boldSystemFont(ofSize: 60) // 글자 스타일 지정
+        label.adjustsFontSizeToFitWidth = true // 라벨 크기에 따라 글자 크기 조정
+        label.minimumScaleFactor = 0.2 // 글자 크기 줄어드는 최소 비율
         
         view.addSubview(label) // 뷰 위에 라벨 추가
         
