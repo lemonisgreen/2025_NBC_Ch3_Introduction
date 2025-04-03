@@ -9,12 +9,6 @@ import SnapKit
 
 extension ViewController {
     
-    // 버튼 타입을 나눠둔 열거형
-    enum ButtonType {
-        case num
-        case oper
-    }
-    
     // 뷰 로드 시 실행될 UI세팅
     func setUpUI() {
         view.backgroundColor = .black
@@ -29,17 +23,17 @@ extension ViewController {
         numLabel.text = textValue
         
         // 숫자 버튼 세팅
-        makeButton(type: .num,
-                   button: [button0, button1, button2,
+        makeButton(button: [button0, button1, button2,
                             button3, button4, button5,
                             button6, button7, button8, button9],
-                   title: Array(0...9).map { String($0) })
+                   title: Array(0...9).map { String($0) },
+                   backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
         // 연산자 버튼 세팅
-        makeButton(type: .oper,
-                   button: [buttonAdd, buttonSub,
+        makeButton(button: [buttonAdd, buttonSub,
                             buttonMul, buttonDiv,
                             buttonAC, buttonEqual],
-                   title: ["+", "-", "×", "/", "AC", "="])
+                   title: ["+", "-", "×", "/", "AC", "="],
+                   backgroundColor: .orange)
         
         // 호리즌탈 스택뷰 세팅
         stackView1 = makeHorizontalStackView([button7, button8, button9, buttonAdd])
@@ -88,23 +82,17 @@ extension ViewController {
     }
     
     // 버튼을 세팅하는 메서드
-    func makeButton(type: ButtonType, button: [UIButton], title: [String]) {
+    func makeButton(button: [UIButton], title: [String], backgroundColor: UIColor) {
         
         for (button, title) in zip(button, title) {
             button.setTitle(title, for: .normal)
             button.setTitleColor(.white, for: .normal)
             button.titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
+            button.setBackgroundColor(backgroundColor, for: .normal)
             button.layer.cornerRadius = 40
             button.layer.masksToBounds = true
             button.addTarget(self, action: #selector(calculationButtonTapped), for: .touchUpInside)
             button.snp.makeConstraints { $0.width.height.equalTo(80) }
-            
-            switch type {
-            case .num:
-                button.setBackgroundColor(UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0), for: .normal)
-            case .oper:
-                button.setBackgroundColor(.orange, for: .normal)
-            }
         }
     }
     
