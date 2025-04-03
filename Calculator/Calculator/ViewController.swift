@@ -37,7 +37,6 @@ class ViewController: UIViewController {
         let buttons: [(UIButton, String, UIColor)] = [
             (acButton, "AC", .orange),
             (zeroButton, "0", .customGray),
-            (equalButton, "=", .orange),
             (devidButton, "/", .orange),
             
             (oneButton, "1", .customGray),
@@ -59,6 +58,10 @@ class ViewController: UIViewController {
         for (button, title, backgroundColor) in buttons {
             basicButtonUI(button, title, #selector(buttonTapped), backgroundColor)
         }
+        
+        basicButtonUI(equalButton, "=", #selector(equalTapped), .orange)
+
+        equalButton.addTarget(self, action: #selector(equalTapped), for: .touchUpInside)
         
         screenNumberUI()
         
@@ -150,6 +153,15 @@ class ViewController: UIViewController {
             label.text = "0"
         } else {
             label.text = (label.text ?? "") + buttonTitle
+        }
+    }
+    
+    @objc private func equalTapped() {
+        guard let expression = label.text else { return }
+        if let result = calculate(expression: expression) {
+            label.text = "\(result)"
+        } else {
+            label.text = "Error"
         }
     }
     
