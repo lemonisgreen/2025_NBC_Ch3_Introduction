@@ -179,8 +179,8 @@ class ViewController: UIViewController {
                 label.text = String(result!) // 결과 출력
             }
         case "0":
-            // 예외처리: 연산자 뒤에 "0" 올 수 없게 처리
-            if label.text == "0" || label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+" {
+            // 예외처리: "0" 만 있을 때 "0"을 추가 할 수 없게 처리
+            if label.text == "0" {
                 return
             } else {
                 label.text! += tappedButtonTitle // 예외처리 상황이 아니면 계산식에 "0" 추가
@@ -200,6 +200,13 @@ class ViewController: UIViewController {
             }
         default:
             // 예외처리: 첫 계산식이 0이 될 수 없게 처리
+            print(label.text!.suffix(2))
+            
+            // 연산자 뒤에 "0" 오면 "0" 을 제거
+            if ["+0", "-0", "*0", "/0"].contains(label.text!.suffix(2)) {
+                label.text!.removeLast()
+            }
+            
             if label.text == "0" {
                 label.text! = tappedButtonTitle // "0" 을 없애고 숫자를 추가
             } else {
