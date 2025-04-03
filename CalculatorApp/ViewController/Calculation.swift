@@ -31,11 +31,7 @@ extension ViewController {
     func calculate(expression: String) throws -> Int {
         
         // 마지막 글자가 연산자면 throw
-        guard textValue.last != "+" &&
-                textValue.last != "-" &&
-                textValue.last != "×" &&
-                textValue.last != "/"
-        else { throw CalculatorError.lastIsOperator }
+        guard !textValue.lastIsOperator else { throw CalculatorError.lastIsOperator }
         
         // 현재 곱하기 연산자가 보기 좋게 ×로 되어 있어서 *로 변경해줘야 함
         let replaced = expression.replacingOccurrences(of: "×", with: "*")
@@ -57,22 +53,30 @@ extension ViewController {
                 numLabel.text = textValue
                 return
             }
-            
-            if textValue.last != "+" &&
-            textValue.last != "-" &&
-            textValue.last != "×" &&
-            textValue.last != "/" {
-                textValue += "0"
+            guard !(textValue.count > 1 && textValue.last == "0" &&
+                   textValue.beforeLastIsOperator) else {
                 numLabel.text = textValue
+                return
             }
+            
+            textValue += "0"
+            numLabel.text = textValue
+            
             
             // 숫자 버튼
         case .number1, .number2, .number3, .number4, .number5, .number6, .number7, .number8, .number9:
-            if textValue != "0" {
+            if textValue == "0" {       // 아무것도 없는 상태
+                textValue = number
+                numLabel.text = textValue
+                
+            } else if textValue.count > 1 && textValue.last == "0" &&
+                        textValue.beforeLastIsOperator {    // 연산자 뒤에 0이 있을 경우
+                textValue.removeLast()
                 textValue += number
                 numLabel.text = textValue
-            } else {
-                textValue = number
+                
+            } else {                    // 일반
+                textValue += number
                 numLabel.text = textValue
             }
             
@@ -117,4 +121,19 @@ extension ViewController {
         case failCalculation
     }
     
+}
+
+extension String {
+    var lastIsOperator: Bool {
+        return self[self.index(before: self.endIndex)] == "+" ||
+        self[self.index(before: self.endIndex)] == "-" ||
+        self[self.index(before: self.endIndex)] == "×" ||
+        self[self.index(before: self.endIndex)] == "/"
+    }
+    var beforeLastIsOperator: Bool {
+        return self[self.index(before: self.index(before: self.endIndex))] == "+" ||
+        self[self.index(before: self.index(before: self.endIndex))] == "-" ||
+        self[self.index(before: self.index(before: self.endIndex))] == "×" ||
+        self[self.index(before: self.index(before: self.endIndex))] == "/"
+    }
 }
