@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //for문을 사용해서 함수 적용하기
         let buttons: [(UIButton, String, UIColor)] = [
             (acButton, "AC", .orange),
             (zeroButton, "0", .customGray),
@@ -58,21 +58,19 @@ class ViewController: UIViewController {
         for (button, title, backgroundColor) in buttons {
             basicButtonUI(button, title, #selector(buttonTapped), backgroundColor)
         }
-        
+        //buttonTapped와 중복 적용을 막기 위해 for문에서 따로 빼둠
         basicButtonUI(equalButton, "=", #selector(equalTapped), .orange)
-
-        equalButton.addTarget(self, action: #selector(equalTapped), for: .touchUpInside)
         
         screenNumberUI()
-        
+        //HorizontalStackView 적용
         let HorizontalStackView1 = makeHorizontalStackView([sevenButton, eightButton, nineButton, plusButton])
         let HorizontalStackView2 = makeHorizontalStackView([fourButton, fiveButton, sixButton, minuseButton])
         let HorizontalStackView3 = makeHorizontalStackView([oneButton, twoButton, threeButton, multipleButton])
         let HorizontalStackView4 = makeHorizontalStackView([acButton, zeroButton, equalButton, devidButton])
-        
+        //VerticalStackView 적용
         makeVerticalStackView([HorizontalStackView1, HorizontalStackView2, HorizontalStackView3, HorizontalStackView4])
     }
-    
+    // 코드 가독성을 위해 VerticalStackView도 함수로 만들어서 정리
     private func makeVerticalStackView(_ views: [UIView]) -> UIStackView {
         
         let verticalStackView = UIStackView(arrangedSubviews: views)
@@ -81,7 +79,6 @@ class ViewController: UIViewController {
         verticalStackView.backgroundColor = .black
         verticalStackView.spacing = 10
         verticalStackView.distribution = .fillEqually
-        verticalStackView.isUserInteractionEnabled = true
         
         view.addSubview(verticalStackView)
         
@@ -118,6 +115,10 @@ class ViewController: UIViewController {
         label.textColor = .white
         label.font = .systemFont(ofSize: 60, weight: .bold)
         label.textAlignment = .right
+        //예외처리1: 기존에 숫자가 프레임을 넘어가면 ...처리되던 걸 기본 아이폰 계산기 처럼 무한으로 눌릴 수 있게 처리
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.1
+        label.lineBreakMode = .byClipping
         
         view.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -143,7 +144,7 @@ class ViewController: UIViewController {
             button.widthAnchor.constraint(equalToConstant: 80)
         ])
     }
-    
+    //버튼을 누르면 해당 버튼의 텍스트가 라벨에 보이도록 하는 함수
     @objc private func buttonTapped(_ sender: UIButton) {
         guard let buttonTitle = sender.title(for: .normal) else { return }
         
@@ -154,8 +155,12 @@ class ViewController: UIViewController {
         } else {
             label.text = (label.text ?? "") + buttonTitle
         }
+        //예외처리2: 계산식 뒤에는 0이 올 수 없도록 처리
+        if ["+0", "-0", "*0", "/0"].contains(label.text!.suffix(2)) {
+            label.text!.removeLast()
+        }
     }
-    
+    //제공된 계산 함수를 적용하기 위한 equalTapped함수
     @objc private func equalTapped() {
         guard let expression = label.text else { return }
         if let result = calculate(expression: expression) {
@@ -164,7 +169,7 @@ class ViewController: UIViewController {
             label.text = "Error"
         }
     }
-    
+    //제공된 계산 함수
     func calculate(expression: String) -> Int? {
         let expression = NSExpression(format: expression)
         if let result = expression.expressionValue(with: nil, context: nil) as? Int {
