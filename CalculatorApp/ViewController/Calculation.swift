@@ -129,6 +129,7 @@ extension ViewController {
 
 // 자주 쓰일 메서드 정의
 extension String {
+    // 마지막 글자가 연산자
     var lastIsOperator: Bool {
         return self[self.index(before: self.endIndex)] == "+" ||
         self[self.index(before: self.endIndex)] == "-" ||
@@ -136,6 +137,7 @@ extension String {
         self[self.index(before: self.endIndex)] == "/"
     }
     
+    // 마지막 글자 앞의 글자가 연산자
     var beforeLastIsOperator: Bool {
         return self[self.index(before: self.index(before: self.endIndex))] == "+" ||
         self[self.index(before: self.index(before: self.endIndex))] == "-" ||
