@@ -48,7 +48,9 @@ extension ViewController {
     // 버튼 클릭 시 실행될 메서드
     func addNumber(_ number: String) {
         switch ButtonTapped(rawValue: number) {
-        case .number0:                                  // 숫자0 버튼
+            
+            // 숫자0 버튼
+        case .number0:
             guard textValue != "0" else {
                 numLabel.text = textValue
                 return
@@ -80,20 +82,20 @@ extension ViewController {
                 numLabel.text = textValue
             }
             
-        case .ac:                                       // AC 버튼
+            // AC 버튼
+        case .ac:
             textValue = "0"
             numLabel.text = textValue
             
-        case .operAdd, .operSub, .operMul, .operDiv:    // 연산자 버튼
-            if textValue.last != "+" &&
-            textValue.last != "-" &&
-            textValue.last != "×" &&
-            textValue.last != "/" {
+            // 연산자 버튼
+        case .operAdd, .operSub, .operMul, .operDiv:
+            if !textValue.lastIsOperator {
                 textValue += number
                 numLabel.text = textValue
             }
             
-        case .operEqual:    // Equal 버튼
+            // Equal 버튼
+        case .operEqual:
             do {            // "="버튼을 눌렀을 때 예외처리
                 
                 textValue = try String(calculate(expression: textValue))
@@ -102,10 +104,12 @@ extension ViewController {
             } catch CalculatorError.lastIsOperator {    // 식의 마지막 문자가 연산자일 때
                 textValue = "0"
                 numLabel.text = "Error"
+                
             } catch CalculatorError.failCalculation {   // 계산에 실패한 경우
                 textValue = "0"
                 numLabel.text = "Error"
-            } catch {
+                
+            } catch {                                   // UnknownError
                 textValue = "0"
                 numLabel.text = "Unknown Error"
             }
@@ -123,6 +127,7 @@ extension ViewController {
     
 }
 
+// 자주 쓰일 메서드 정의
 extension String {
     var lastIsOperator: Bool {
         return self[self.index(before: self.endIndex)] == "+" ||
@@ -130,6 +135,7 @@ extension String {
         self[self.index(before: self.endIndex)] == "×" ||
         self[self.index(before: self.endIndex)] == "/"
     }
+    
     var beforeLastIsOperator: Bool {
         return self[self.index(before: self.index(before: self.endIndex))] == "+" ||
         self[self.index(before: self.index(before: self.endIndex))] == "-" ||
