@@ -2,22 +2,10 @@ import UIKit
 import SnapKit
 
 class ViewController: UIViewController {
-    
-    let label = UILabel() // 계산기 숫자 출력
-    let verticalStackView = UIStackView() // 수직 스택뷰
-    
-    let calculateModel = Calculate() // 연산 기능 담당 클래스 객체 생성
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    // - MARK: - 라벨 속성 정의
+    let label: UILabel = {
+        let label = UILabel()
         
-        configureUI()
-    }
-    
-    func configureUI() {
-        view.backgroundColor = .black // 배경색 검은색 지정
-        
-        // - MARK: - 라벨 속성 정의
         label.text = "0" // 기본 텍스트 지정
         label.textColor = .white // 글자색 지정
         label.textAlignment = .right // 글자 정렬 기준 지정
@@ -25,6 +13,30 @@ class ViewController: UIViewController {
         label.adjustsFontSizeToFitWidth = true // 라벨 크기에 따라 글자 크기 조정
         label.minimumScaleFactor = 0.2 // 글자 크기 줄어드는 최소 비율
         
+        return label
+    }()
+    
+    let calculateModel = Calculate() // 연산 기능 담당 클래스 객체 생성
+}
+
+// 뷰 사이클 분리
+extension ViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureUI()
+        setupLabel()
+        setupStackView()
+    }
+}
+
+private extension ViewController{
+    func configureUI() {
+        view.backgroundColor = .black // 배경색 검은색 지정
+    }
+    
+    // 라벨 설정 메소드
+    func setupLabel() {
         view.addSubview(label) // 뷰 위에 라벨 추가
         
         // 라벨 제약 조건 추가
@@ -34,46 +46,19 @@ class ViewController: UIViewController {
             $0.top.equalToSuperview().offset(200)
             $0.height.equalTo(100)
         }
-        
-        // - MARK: - 스택뷰 생성 메소드를 이용하여 스택뷰 생성
-        // 첫째 줄 스택뷰
+    }
+    // - MARK: - 스택뷰 정의 메소드
+    /**
+     스택뷰 정의 메소드
+     */
+    func setupStackView() {
+        // 스택뷰 생성 메소드를 이용하여 스택뷰 생성
         let stackView = makeHorizontalStackView(buttonTitle: ["7", "8", "9", "+"])
-        
-        // 첫째 줄 스택뷰 제약 조건 추가
-        stackView.snp.makeConstraints {
-            $0.height.equalTo(80)
-        }
-        
-        // 둘째 줄 스택뷰
         let secondStackView = makeHorizontalStackView(buttonTitle: ["4", "5", "6", "-"])
-        
-        // 둘째 줄 스택뷰 제약 조건 추가
-        secondStackView.snp.makeConstraints {
-            $0.height.equalTo(80)
-        }
-        
-        // 셋째 줄 스택뷰
         let thirdStackView = makeHorizontalStackView(buttonTitle: ["1", "2", "3", "*"])
-        
-        // 셋째 줄 스택뷰 제약 조건 추가
-        thirdStackView.snp.makeConstraints {
-            $0.height.equalTo(80)
-        }
-        
-        // 네째 줄 스택뷰
         let fourthStackView = makeHorizontalStackView(buttonTitle: ["AC", "0", "=", "/"])
         
-        // 네째 줄 스택뷰 제약 조건 추가
-        fourthStackView.snp.makeConstraints {
-            $0.height.equalTo(80)
-        }
-        
-        
-        // - MARK: - 수직 스택뷰 속성 정의
-        verticalStackView.axis = .vertical
-        verticalStackView.backgroundColor = .black
-        verticalStackView.spacing = 10
-        verticalStackView.distribution = .fillEqually
+        let verticalStackView = makeVerticalStackView()
         
         view.addSubview(verticalStackView) // 뷰 위에 스택뷰 추가
         
@@ -87,9 +72,25 @@ class ViewController: UIViewController {
         // 수직 스택뷰 안에 수평 스택뷰 4개 추가
         [stackView, secondStackView, thirdStackView, fourthStackView]
             .forEach { verticalStackView.addArrangedSubview($0) }
-        
     }
-    
+    // - MARK: - 수직 스택뷰 생성 메소드
+    /**
+     수직 스택뷰 생성 메소드
+     
+     - Returns: 생성한 스택뷰
+     */
+    func makeVerticalStackView() -> UIStackView {
+        // - MARK: - 수직 스택뷰 속성 정의
+        let verticalStackView = UIStackView()
+        
+        verticalStackView.axis = .vertical
+        verticalStackView.backgroundColor = .black
+        verticalStackView.spacing = 10
+        verticalStackView.distribution = .fillEqually
+        
+        return verticalStackView
+    }
+        
     // - MARK: - 버튼 생성 메소드
     /**
      버튼 생성 메소드
@@ -138,23 +139,35 @@ class ViewController: UIViewController {
         return button
     }
     
-    // - MARK: - 스택뷰 생성 메소드
+    // - MARK: - 수평 스택뷰 생성 메소드
     /**
      버튼을 담고있는 스택뷰 생성 메소드
      
      - Parameters:
-     - buttonTitle: 스택뷰에 넣을 버튼 이름의 배열
+        - buttonTitle: 스택뷰에 넣을 버튼 이름의 배열
      - Returns: 생성한 스택뷰
      */
     func makeHorizontalStackView(buttonTitle : [String]) -> UIStackView {
         let buttons = buttonTitle.map { makeButton(title: $0) } // makeButton 메소드를 이용하여 버튼 생성
         let stackView = UIStackView(arrangedSubviews: buttons) // 스택뷰에 윗줄에서 만들 버튼 객체 삽입
+        
         stackView.axis = .horizontal // 스택뷰에 수평 속성 추가
         stackView.spacing = 10 // 스택뷰 요소 간격 설정
         stackView.distribution = .fillEqually // 스택뷰 요소 분산 설정
+        
+        stackView.snp.makeConstraints {
+            $0.height.equalTo(80)
+        }
+        
         return stackView
     }
-    
+    // - MARK: - 버튼 이벤트 메소드
+    /**
+     버튼 이벤트 생성 메소드
+
+     - Parameters:
+        - button: 이벤트 연결할 버튼 객체
+     */
     @objc
     private func buttonTapped(button: UIButton) {
         /*
@@ -164,6 +177,7 @@ class ViewController: UIViewController {
          옵셔널을 언래핑을 위해 guard let 사용
          */
         guard let tappedButtonTitle = button.currentTitle else { return }
+        guard let lastText = label.text?.last else { return }
         
         // 누른 버튼에 따른 로직 구현
         switch tappedButtonTitle {
@@ -172,7 +186,7 @@ class ViewController: UIViewController {
             return
         case "=":
             // 예외처리: 계산식이 연산자에서 끝났으면 아무동작 하지 않게 처리
-            if label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+" {
+            if ["/", "*", "-", "+"].contains(lastText) {
                 return
             } else {
                 let result = calculateModel.calculate(expression:label.text!) // 연산 수행
@@ -187,13 +201,16 @@ class ViewController: UIViewController {
             }
         case "/","*","-","+":
             // 예외처리: 마지막 계산식에 연산자가 있으면, 더 이상 연산자를 사용 못하게 처리
-            if label.text?.last == "/" || label.text?.last == "*" || label.text?.last == "-" || label.text?.last == "+"
-            {
+            if ["/", "*", "-", "+"].contains(lastText) {
+                // 연사자 입력 후 다시 연산자를 입력하면 마지막 입력한 연산자로 변경됨
+                // 예) 12+ 입력 후 - 입력 시 12- 로 변경됨
+                label.text!.removeLast()
+                label.text! += tappedButtonTitle
                 return
             }
             
             // 예외처리: 첫 계산식이 0과 연산자가 될 수 없게 처리
-            if  label.text == "0" || label.text == "/" || label.text == "*" || label.text == "-" || label.text == "+" {
+            if ["/", "*", "-", "+", "0"].contains(label.text) {
                 return
             } else {
                 label.text! += tappedButtonTitle // 예외처리 상황이 아니면 계산식에 추가
