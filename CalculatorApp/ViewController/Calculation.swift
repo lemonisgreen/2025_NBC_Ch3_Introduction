@@ -89,10 +89,12 @@ extension ViewController {
             
             // 연산자 버튼
         case .operAdd, .operSub, .operMul, .operDiv:
-            if !textValue.lastIsOperator {
-                textValue += number
-                numLabel.text = textValue
+            if textValue.lastIsOperator {
+                textValue.removeLast()
             }
+            
+            textValue += number
+            numLabel.text = textValue
             
             // Equal 버튼
         case .operEqual:
